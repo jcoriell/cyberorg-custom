@@ -9,11 +9,12 @@
  * Custom blocks
  */
 //% weight=100 color=#00C1D4 icon="☰"
-//% groups='["Shift Ciphers", "Vigenere Ciphers", "Pigpen"]'
+//% groups='["Shift Ciphers", "Vigenere Ciphers", "Pigpen", "Morse Code"]'
 namespace encryption {
 
     //% block
-    export const alphabet = "abcdefghijklmnopqrstuvwxyz"
+    //% group="Shift Ciphers"
+    export const shiftCipherAlphabet = "abcdefghijklmnopqrstuvwxyz"
 
     /**
      * Shift a message using a numeric key.
@@ -26,9 +27,11 @@ namespace encryption {
         n = Math.round(n)
         let result = ''
         for (let i = 0; i < s.length; i++){
-            let index = alphabet.indexOf(s.charAt(i).toLowerCase())
+            let letter = s.charAt(i).toLowerCase()
+            let index = shiftCipherAlphabet.indexOf(letter)
             if (index > -1){
-                result = result + alphabet.charAt(Math.mod(index + n, alphabet.length))
+                let newValue = Math.mod(index + n, shiftCipherAlphabet.length)
+                result = result + shiftCipherAlphabet.charAt(newValue)
             }
             else{
                 result = result + s.charAt(i)
@@ -48,16 +51,16 @@ namespace encryption {
     export function shiftAlpha(s: string, k1: string, k2: string): string {
         k1 = k1.charAt(0).toLowerCase()
         k2 = k2.charAt(0).toLowerCase()
-        let n1 = alphabet.indexOf(k1)
-        let n2 = alphabet.indexOf(k2)
+        let n1 = shiftCipherAlphabet.indexOf(k1)
+        let n2 = shiftCipherAlphabet.indexOf(k2)
         return shiftNumeric(s, n2 - n1)
     }
 
     /**
      * TODO: describe your function here
      * @param s describe value here, eg: "hello"
-     * @param k1 describe value here, eg: Letter.A 
-     * @param k2 describe value here, eg: Letter.D
+     * @param k1 describe value here, eg: Alphabet.A 
+     * @param k2 describe value here, eg: Alphabet.D
     */
     //% block="shift | %s | with shift | %k1=device_letter | to | %k2=device_letter"
     //% useEnumVal=1
@@ -68,65 +71,63 @@ namespace encryption {
 
     //% blockId=device_letter block="%name"
     //% useEnumVal=1
-    //& i.fieldEditor="imagedropdown"
-    //% i.fieldOptions.columns = "13"
-    //% i.fieldOptions.width = "380"
-    //% i.fieldOptions.maxRows = 2
-    export function letterValue(name: Letter): number {
+    //% name.fieldEditor="gridpicker"
+    //% name.fieldOptions.columns="13"
+    //% name.fieldOptions.width="380"
+    //% name.fieldOptions.maxRows=3
+    export function letterValue(name: Alphabet): number {
         return name;
     }
 
-    /**
-     * Pigpen
-     * @param text: string
-     */
+    //% block
+    //% group="Pigpen"
+    export function pigpenAlphabetImage(i: Alphabet): Image {
+        switch (i) {
+            case Alphabet.A: return images.createImage(`. . . . #\n. . . . #\n. . . . #\n. . . . #\n# # # # #`);
+            case Alphabet.B: return images.createImage(`. . . . #\n. . . . #\n. . # . #\n. . . . #\n# # # # #`);
+            case Alphabet.C: return images.createImage(`# . . . #\n# . . . #\n# . . . #\n# . . . #\n# # # # #`);
+            case Alphabet.D: return images.createImage(`# . . . #\n# . . . #\n# . # . #\n# . . . #\n# # # # #`);
+            case Alphabet.E: return images.createImage(`# . . . .\n# . . . .\n# . . . .\n# . . . .\n# # # # #`);
+            case Alphabet.F: return images.createImage(`# . . . .\n# . . . .\n# . # . .\n# . . . .\n# # # # #`);
+            case Alphabet.G: return images.createImage(`# # # # #\n. . . . #\n. . . . #\n. . . . #\n# # # # #`);
+            case Alphabet.H: return images.createImage(`# # # # #\n. . . . #\n. . # . #\n. . . . #\n# # # # #`);
+            case Alphabet.I: return images.createImage(`# # # # #\n# . . . #\n# . . . #\n# . . . #\n# # # # #`);
+            case Alphabet.J: return images.createImage(`# # # # #\n# . . . #\n# . # . #\n# . . . #\n# # # # #`);
+            case Alphabet.K: return images.createImage(`# # # # #\n# . . . .\n# . . . .\n# . . . .\n# # # # #`);
+            case Alphabet.L: return images.createImage(`# # # # #\n# . . . .\n# . # . .\n# . . . .\n# # # # #`);
+            case Alphabet.M: return images.createImage(`# # # # #\n. . . . #\n. . . . #\n. . . . #\n. . . . #`);
+            case Alphabet.N: return images.createImage(`# # # # #\n. . . . #\n. . # . #\n. . . . #\n. . . . #`);
+            case Alphabet.O: return images.createImage(`# # # # #\n# . . . #\n# . . . #\n# . . . #\n# . . . #`);
+            case Alphabet.P: return images.createImage(`# # # # #\n# . . . #\n# . # . #\n# . . . #\n# . . . #`);
+            case Alphabet.Q: return images.createImage(`# # # # #\n# . . . .\n# . . . .\n# . . . .\n# . . . .`);
+            case Alphabet.R: return images.createImage(`# # # # #\n# . . . .\n# . # . .\n# . . . .\n# . . . .`);
+            case Alphabet.S: return images.createImage(`. . . . .\n. . . . .\n# . . . #\n. # . # .\n. . # . .`);
+            case Alphabet.T: return images.createImage(`. . . . .\n. . # . .\n# . . . #\n. # . # .\n. . # . .`);
+            case Alphabet.U: return images.createImage(`. . # . .\n. . . # .\n. . . . #\n. . . # .\n. . # . .`);
+            case Alphabet.V: return images.createImage(`. . # . .\n. . . # .\n. # . . #\n. . . # .\n. . # . .`);
+            case Alphabet.W: return images.createImage(`. . # . .\n. # . # .\n# . . . #\n. . . . .\n. . . . .`);
+            case Alphabet.X: return images.createImage(`. . # . .\n. # . # .\n# . . . #\n. . # . .\n. . . . .`);
+            case Alphabet.Y: return images.createImage(`. . # . .\n. # . . .\n# . . . .\n. # . . .\n. . # . .`);
+            case Alphabet.Z: return images.createImage(`. . # . .\n. # . . .\n# . . # .\n. # . . .\n. . # . .`);
+            default: return images.createImage(`. .\n. .\n. .\n. .\n. .`);
+        }
+    }
+
+
+
     //% block
     //% group="Pigpen"
     export function Pigpen(text: string): void{
-        let plainTextMessage = text
-        let letters: {[key: string]: Image} = {    
-            a: images.createImage(`. . . . #\n. . . . #\n. . . . #\n. . . . #\n# # # # #`),
-            b: images.createImage(`. . . . #\n. . . . #\n. . # . #\n. . . . #\n# # # # #`),
-            c: images.createImage(`# . . . #\n# . . . #\n# . . . #\n# . . . #\n# # # # #`),
-            d: images.createImage(`# . . . #\n# . . . #\n# . # . #\n# . . . #\n# # # # #`),
-            e: images.createImage(`# . . . .\n# . . . .\n# . . . .\n# . . . .\n# # # # #`),
-            f: images.createImage(`# . . . .\n# . . . .\n# . # . .\n# . . . .\n# # # # #`),
-            g: images.createImage(`# # # # #\n. . . . #\n. . . . #\n. . . . #\n# # # # #`),
-            h: images.createImage(`# # # # #\n. . . . #\n. . # . #\n. . . . #\n# # # # #`),
-            i: images.createImage(`# # # # #\n# . . . #\n# . . . #\n# . . . #\n# # # # #`),
-            j: images.createImage(`# # # # #\n# . . . #\n# . # . #\n# . . . #\n# # # # #`),
-            k: images.createImage(`# # # # #\n# . . . .\n# . . . .\n# . . . .\n# # # # #`),
-            l: images.createImage(`# # # # #\n# . . . .\n# . # . .\n# . . . .\n# # # # #`),
-            m: images.createImage(`# # # # #\n. . . . #\n. . . . #\n. . . . #\n. . . . #`),
-            n: images.createImage(`# # # # #\n. . . . #\n. . # . #\n. . . . #\n. . . . #`),
-            o: images.createImage(`# # # # #\n# . . . #\n# . . . #\n# . . . #\n# . . . #`),
-            p: images.createImage(`# # # # #\n# . . . #\n# . # . #\n# . . . #\n# . . . #`),
-            q: images.createImage(`# # # # #\n# . . . .\n# . . . .\n# . . . .\n# . . . .`),
-            r: images.createImage(`# # # # #\n# . . . .\n# . # . .\n# . . . .\n# . . . .`),
-            s: images.createImage(`. . . . .\n. . . . .\n# . . . #\n. # . # .\n. . # . .`),
-            t: images.createImage(`. . . . .\n. . # . .\n# . . . #\n. # . # .\n. . # . .`),
-            u: images.createImage(`. . # . .\n. . . # .\n. . . . #\n. . . # .\n. . # . .`),
-            v: images.createImage(`. . # . .\n. . . # .\n. # . . #\n. . . # .\n. . # . .`),
-            w: images.createImage(`. . # . .\n. # . # .\n# . . . #\n. . . . .\n. . . . .`),
-            x: images.createImage(`. . # . .\n. # . # .\n# . . . #\n. . # . .\n. . . . .`),
-            y: images.createImage(`. . # . .\n. # . . .\n# . . . .\n. # . . .\n. . # . .`),
-            z: images.createImage(`. . # . .\n. # . . .\n# . . # .\n. # . . .\n. . # . .`),
-            space: images.createImage(`. .\n. .\n. .\n. .\n. .`),
-            ending: images.createImage(`. . .\n. . .\n. . .\n. . .\n. . .`)
-        } 
-        for (let value of plainTextMessage) {
+        let space = images.createImage(`. .\n. .\n. .\n. .\n. .`)
+        let ending = images.createImage(`. . .\n. . .\n. . .\n. . .\n. . .`)
+        for (let value of text) {
             value = value.toLowerCase()
-            if (alphabet.includes(value)) {
-                letters[value].scrollImage(0, 250)
-                letters.space.scrollImage(0, 250)
-            }
-            if (value == ' ') {
-                letters.space.scrollImage(0, 250)
-            }
+            pigpenAlphabetImage(letterToAlphabet(value)).scrollImage(0, 250)
+            space.scrollImage(0, 250)
         }
-    
-    letters.ending.scrollImage(0, 250)    
+        ending.scrollImage(0, 250)
     }
+
     /**
      * morse
      * @param text write description here, eg: "hello"
@@ -134,6 +135,7 @@ namespace encryption {
      */
     //% block
     //% time.min=1 time.max=10
+    //% group="Morse Code"
     export function Morse(text: string, time: number = 8): void{
         time = 11-time
         let plainTextMessage = text
@@ -234,7 +236,7 @@ namespace Math {
 
 //% color=#3CDBC0 weight=101 icon="☰"
 namespace pairings { 
-
+    
     let _pairings: Pairing[];
 
     //% block = "new mapping"
@@ -293,34 +295,41 @@ namespace pairings {
     }
 }
 
-enum Letter {
-    //% blockIdentity=encryption.letterValue enumval=0
-    A = 0,
-    //% blockIdentity=encryption.letterValue enumval=1
-    B = 1,
-    //% blockIdentity=encryption.letterValue enumval=2
-    C = 2,
-    //% blockIdentity=encryption.letterValue enumval=3
-    D = 3,
-    //% blockIdentity=encryption.letterValue enumval=4
-    E = 4,
-    //% blockIdentity=encryption.letterValue enumval=5
-    F = 5,
-    //% blockIdentity=encryption.letterValue enumval=6
-    H = 6,
-    //% blockIdentity=encryption.letterValue enumval=7
-    I = 7,
-    //% blockIdentity=encryption.letterValue enumval=8
-    J = 8,
-    //% blockIdentity=encryption.letterValue enumval=9
-    K = 9,
-    //% blockIdentity=encryption.letterValue enumval=10
-    L = 10,
-    //% blockIdentity=encryption.letterValue enumval=11
-    M = 11,
-    //% blockIdentity=encryption.letterValue enumval=12
-    N = 12
+enum Alphabet {A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z}
+
+function letterToAlphabet(x: string): Alphabet{
+    switch (x) {
+        case 'a': return Alphabet.A
+        case 'b': return Alphabet.B
+        case 'c': return Alphabet.C
+        case 'd': return Alphabet.D
+        case 'e': return Alphabet.E
+        case 'f': return Alphabet.F
+        case 'g': return Alphabet.G
+        case 'h': return Alphabet.H
+        case 'i': return Alphabet.I
+        case 'j': return Alphabet.J
+        case 'k': return Alphabet.K
+        case 'l': return Alphabet.L
+        case 'm': return Alphabet.M
+        case 'n': return Alphabet.N
+        case 'o': return Alphabet.O
+        case 'p': return Alphabet.P
+        case 'q': return Alphabet.Q
+        case 'r': return Alphabet.R
+        case 's': return Alphabet.S
+        case 't': return Alphabet.T
+        case 'u': return Alphabet.U
+        case 'v': return Alphabet.V
+        case 'w': return Alphabet.W
+        case 'x': return Alphabet.X
+        case 'y': return Alphabet.Y
+        case 'z': return Alphabet.Z
+        default: return null
+    }
 }
+
+
 
 
 
