@@ -65,7 +65,7 @@ namespace encryption {
     //% block="shift | %s | with shift | %k1=device_letter | to | %k2=device_letter"
     //% useEnumVal=1
     //% group="Shift Ciphers"
-    export function shiftAlphaTwo(s: string, k1: number, k2: number): string{
+    export function shiftAlphaSelection(s: string, k1: number, k2: number): string{
         return shiftNumeric(s, k2 - k1)
     }
 
@@ -75,6 +75,7 @@ namespace encryption {
     //% name.fieldOptions.columns="13"
     //% name.fieldOptions.width="380"
     //% name.fieldOptions.maxRows=3
+    //% group="Shift Ciphers"
     export function letterValue(name: Alphabet): number {
         return name;
     }
@@ -117,7 +118,7 @@ namespace encryption {
 
     //% block
     //% group="Pigpen"
-    export function Pigpen(text: string): void{
+    export function pigpen(text: string): void{
         let space = images.createImage(`. .\n. .\n. .\n. .\n. .`)
         let ending = images.createImage(`. . .\n. . .\n. . .\n. . .\n. . .`)
         for (let value of text) {
@@ -126,6 +127,84 @@ namespace encryption {
             space.scrollImage(0, 250)
         }
         ending.scrollImage(0, 250)
+    }
+
+    export const dot = images.createImage(`
+            . . . . .
+            . # # # .
+            . # # # .
+            . # # # .
+            . . . . .
+            `)
+
+
+    export const dash = images.createImage(`
+            . . . . .
+            . . . . .
+            # # # # #
+            . . . . .
+            . . . . .
+            `)
+
+
+    function morseCodeAlphabetImage(i: Alphabet): Image[]{
+        switch (i){
+            case Alphabet.A: return [dot, dash];
+            case Alphabet.B: return [dash, dot, dot, dot];
+            case Alphabet.C: return [dash, dot, dash, dot];
+            case Alphabet.D: return [dash, dot, dot];
+            case Alphabet.E: return [dot];
+            case Alphabet.F: return [dot, dot, dash, dot];
+            case Alphabet.G: return [dash, dash, dot];
+            case Alphabet.H: return [dot, dot, dot, dot];
+            case Alphabet.I: return [dot, dot];
+            case Alphabet.J: return [dot, dash, dash, dash];
+            case Alphabet.K: return [dash, dot, dash];
+            case Alphabet.L: return [dot, dash, dot, dot];
+            case Alphabet.M: return [dash, dash];
+            case Alphabet.N: return [dash, dot];
+            case Alphabet.O: return [dash, dash, dash];
+            case Alphabet.P: return [dot, dash, dash, dot];
+            case Alphabet.Q: return [dash, dash, dot, dash];
+            case Alphabet.R: return [dot, dash, dot];
+            case Alphabet.S: return [dot, dot, dot];
+            case Alphabet.T: return [dash];
+            case Alphabet.U: return [dot, dot, dash];
+            case Alphabet.V: return [dot, dot, dot, dash];
+            case Alphabet.W: return [dot, dash, dash];
+            case Alphabet.X: return [dash, dot, dot, dash];
+            case Alphabet.Y: return [dash, dot, dash, dash];
+            case Alphabet.Z: return [dash, dash, dot, dot];
+            default: return []
+        }
+    }
+
+    /**
+     * Display more code
+     * @param text write description here, eg: "hello"
+     * @param speed write description here, eg: 8
+     */
+    //% block="show | %text | as Morse code at speed | %speed"
+    //% speed.min=1 speed.max=10
+    //% group="Morse Code"
+    export function morseTwo(text: string, speed: number): void{
+        speed = 100*(11 - speed);
+        let dotInterval = speed;
+        let dashInterval = 3*speed;
+        let letterInterval = 2*speed;
+        let wordInterval = 6*speed;
+        for (let letter of text){
+            letter = letter.toLowerCase()
+            let alphabetValue = letterToAlphabet(letter)
+            let images = morseCodeAlphabetImage(alphabetValue)
+            for (let i of images){
+                let interval = i === dot ? dotInterval : dashInterval
+                i.showImage(0, interval)
+                basic.clearScreen()
+                basic.pause(speed)
+            }
+            letter === ' ' ? basic.pause(wordInterval) : basic.pause(letterInterval)
+        }
     }
 
     /**
