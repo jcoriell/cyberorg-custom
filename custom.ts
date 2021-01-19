@@ -59,8 +59,8 @@ namespace encryption {
     /**
      * TODO: describe your function here
      * @param s describe value here, eg: "hello"
-     * @param k1 describe value here, eg: Alphabet.A 
-     * @param k2 describe value here, eg: Alphabet.D
+     * @param k1 describe value here, eg: ShiftAlphabet.A 
+     * @param k2 describe value here, eg: ShiftAlphabet.D
     */
     //% block="shift | %s | with shift | %k1=device_letter | to | %k2=device_letter"
     //% useEnumVal=1
@@ -76,40 +76,42 @@ namespace encryption {
     //% name.fieldOptions.width="380"
     //% name.fieldOptions.maxRows=3
     //% group="Shift Ciphers"
-    export function letterValue(name: Alphabet): number {
+    export function letterValue(name: ShiftAlphabet): number {
         return name;
     }
 
-    //% block
+    //% block="%i"
+    //% i.fieldEditor="gridpicker"
+    //% i.fieldOptions.columns="6"
     //% group="Pigpen"
-    export function pigpenAlphabetImage(i: Alphabet): Image {
+    export function pigpenAlphabetImage(i: PigpenAlphabet): Image {
         switch (i) {
-            case Alphabet.A: return images.createImage(`. . . . #\n. . . . #\n. . . . #\n. . . . #\n# # # # #`);
-            case Alphabet.B: return images.createImage(`. . . . #\n. . . . #\n. . # . #\n. . . . #\n# # # # #`);
-            case Alphabet.C: return images.createImage(`# . . . #\n# . . . #\n# . . . #\n# . . . #\n# # # # #`);
-            case Alphabet.D: return images.createImage(`# . . . #\n# . . . #\n# . # . #\n# . . . #\n# # # # #`);
-            case Alphabet.E: return images.createImage(`# . . . .\n# . . . .\n# . . . .\n# . . . .\n# # # # #`);
-            case Alphabet.F: return images.createImage(`# . . . .\n# . . . .\n# . # . .\n# . . . .\n# # # # #`);
-            case Alphabet.G: return images.createImage(`# # # # #\n. . . . #\n. . . . #\n. . . . #\n# # # # #`);
-            case Alphabet.H: return images.createImage(`# # # # #\n. . . . #\n. . # . #\n. . . . #\n# # # # #`);
-            case Alphabet.I: return images.createImage(`# # # # #\n# . . . #\n# . . . #\n# . . . #\n# # # # #`);
-            case Alphabet.J: return images.createImage(`# # # # #\n# . . . #\n# . # . #\n# . . . #\n# # # # #`);
-            case Alphabet.K: return images.createImage(`# # # # #\n# . . . .\n# . . . .\n# . . . .\n# # # # #`);
-            case Alphabet.L: return images.createImage(`# # # # #\n# . . . .\n# . # . .\n# . . . .\n# # # # #`);
-            case Alphabet.M: return images.createImage(`# # # # #\n. . . . #\n. . . . #\n. . . . #\n. . . . #`);
-            case Alphabet.N: return images.createImage(`# # # # #\n. . . . #\n. . # . #\n. . . . #\n. . . . #`);
-            case Alphabet.O: return images.createImage(`# # # # #\n# . . . #\n# . . . #\n# . . . #\n# . . . #`);
-            case Alphabet.P: return images.createImage(`# # # # #\n# . . . #\n# . # . #\n# . . . #\n# . . . #`);
-            case Alphabet.Q: return images.createImage(`# # # # #\n# . . . .\n# . . . .\n# . . . .\n# . . . .`);
-            case Alphabet.R: return images.createImage(`# # # # #\n# . . . .\n# . # . .\n# . . . .\n# . . . .`);
-            case Alphabet.S: return images.createImage(`. . . . .\n. . . . .\n# . . . #\n. # . # .\n. . # . .`);
-            case Alphabet.T: return images.createImage(`. . . . .\n. . # . .\n# . . . #\n. # . # .\n. . # . .`);
-            case Alphabet.U: return images.createImage(`. . # . .\n. . . # .\n. . . . #\n. . . # .\n. . # . .`);
-            case Alphabet.V: return images.createImage(`. . # . .\n. . . # .\n. # . . #\n. . . # .\n. . # . .`);
-            case Alphabet.W: return images.createImage(`. . # . .\n. # . # .\n# . . . #\n. . . . .\n. . . . .`);
-            case Alphabet.X: return images.createImage(`. . # . .\n. # . # .\n# . . . #\n. . # . .\n. . . . .`);
-            case Alphabet.Y: return images.createImage(`. . # . .\n. # . . .\n# . . . .\n. # . . .\n. . # . .`);
-            case Alphabet.Z: return images.createImage(`. . # . .\n. # . . .\n# . . # .\n. # . . .\n. . # . .`);
+            case PigpenAlphabet.A: return images.createImage(`. . . . #\n. . . . #\n. . . . #\n. . . . #\n# # # # #`);
+            case PigpenAlphabet.B: return images.createImage(`. . . . #\n. . . . #\n. . # . #\n. . . . #\n# # # # #`);
+            case PigpenAlphabet.C: return images.createImage(`# . . . #\n# . . . #\n# . . . #\n# . . . #\n# # # # #`);
+            case PigpenAlphabet.D: return images.createImage(`# . . . #\n# . . . #\n# . # . #\n# . . . #\n# # # # #`);
+            case PigpenAlphabet.E: return images.createImage(`# . . . .\n# . . . .\n# . . . .\n# . . . .\n# # # # #`);
+            case PigpenAlphabet.F: return images.createImage(`# . . . .\n# . . . .\n# . # . .\n# . . . .\n# # # # #`);
+            case PigpenAlphabet.G: return images.createImage(`# # # # #\n. . . . #\n. . . . #\n. . . . #\n# # # # #`);
+            case PigpenAlphabet.H: return images.createImage(`# # # # #\n. . . . #\n. . # . #\n. . . . #\n# # # # #`);
+            case PigpenAlphabet.I: return images.createImage(`# # # # #\n# . . . #\n# . . . #\n# . . . #\n# # # # #`);
+            case PigpenAlphabet.J: return images.createImage(`# # # # #\n# . . . #\n# . # . #\n# . . . #\n# # # # #`);
+            case PigpenAlphabet.K: return images.createImage(`# # # # #\n# . . . .\n# . . . .\n# . . . .\n# # # # #`);
+            case PigpenAlphabet.L: return images.createImage(`# # # # #\n# . . . .\n# . # . .\n# . . . .\n# # # # #`);
+            case PigpenAlphabet.M: return images.createImage(`# # # # #\n. . . . #\n. . . . #\n. . . . #\n. . . . #`);
+            case PigpenAlphabet.N: return images.createImage(`# # # # #\n. . . . #\n. . # . #\n. . . . #\n. . . . #`);
+            case PigpenAlphabet.O: return images.createImage(`# # # # #\n# . . . #\n# . . . #\n# . . . #\n# . . . #`);
+            case PigpenAlphabet.P: return images.createImage(`# # # # #\n# . . . #\n# . # . #\n# . . . #\n# . . . #`);
+            case PigpenAlphabet.Q: return images.createImage(`# # # # #\n# . . . .\n# . . . .\n# . . . .\n# . . . .`);
+            case PigpenAlphabet.R: return images.createImage(`# # # # #\n# . . . .\n# . # . .\n# . . . .\n# . . . .`);
+            case PigpenAlphabet.S: return images.createImage(`. . . . .\n. . . . .\n# . . . #\n. # . # .\n. . # . .`);
+            case PigpenAlphabet.T: return images.createImage(`. . . . .\n. . # . .\n# . . . #\n. # . # .\n. . # . .`);
+            case PigpenAlphabet.U: return images.createImage(`. . # . .\n. . . # .\n. . . . #\n. . . # .\n. . # . .`);
+            case PigpenAlphabet.V: return images.createImage(`. . # . .\n. . . # .\n. # . . #\n. . . # .\n. . # . .`);
+            case PigpenAlphabet.W: return images.createImage(`. . # . .\n. # . # .\n# . . . #\n. . . . .\n. . . . .`);
+            case PigpenAlphabet.X: return images.createImage(`. . # . .\n. # . # .\n# . . . #\n. . # . .\n. . . . .`);
+            case PigpenAlphabet.Y: return images.createImage(`. . # . .\n. # . . .\n# . . . .\n. # . . .\n. . # . .`);
+            case PigpenAlphabet.Z: return images.createImage(`. . # . .\n. # . . .\n# . . # .\n. # . . .\n. . # . .`);
             default: return images.createImage(`. .\n. .\n. .\n. .\n. .`);
         }
     }
@@ -123,7 +125,7 @@ namespace encryption {
         let ending = images.createImage(`. . .\n. . .\n. . .\n. . .\n. . .`)
         for (let value of text) {
             value = value.toLowerCase()
-            pigpenAlphabetImage(letterToAlphabet(value)).scrollImage(0, 250)
+            pigpenAlphabetImage(letterToPigpenAlphabet(value)).scrollImage(0, 250)
             space.scrollImage(0, 250)
         }
         ending.scrollImage(0, 250)
@@ -147,34 +149,34 @@ namespace encryption {
             `)
 
 
-    function morseCodeAlphabetImage(i: Alphabet): Image[]{
+    function morseCodeAlphabetImage(i: MorseAlphabet): Image[]{
         switch (i){
-            case Alphabet.A: return [dot, dash];
-            case Alphabet.B: return [dash, dot, dot, dot];
-            case Alphabet.C: return [dash, dot, dash, dot];
-            case Alphabet.D: return [dash, dot, dot];
-            case Alphabet.E: return [dot];
-            case Alphabet.F: return [dot, dot, dash, dot];
-            case Alphabet.G: return [dash, dash, dot];
-            case Alphabet.H: return [dot, dot, dot, dot];
-            case Alphabet.I: return [dot, dot];
-            case Alphabet.J: return [dot, dash, dash, dash];
-            case Alphabet.K: return [dash, dot, dash];
-            case Alphabet.L: return [dot, dash, dot, dot];
-            case Alphabet.M: return [dash, dash];
-            case Alphabet.N: return [dash, dot];
-            case Alphabet.O: return [dash, dash, dash];
-            case Alphabet.P: return [dot, dash, dash, dot];
-            case Alphabet.Q: return [dash, dash, dot, dash];
-            case Alphabet.R: return [dot, dash, dot];
-            case Alphabet.S: return [dot, dot, dot];
-            case Alphabet.T: return [dash];
-            case Alphabet.U: return [dot, dot, dash];
-            case Alphabet.V: return [dot, dot, dot, dash];
-            case Alphabet.W: return [dot, dash, dash];
-            case Alphabet.X: return [dash, dot, dot, dash];
-            case Alphabet.Y: return [dash, dot, dash, dash];
-            case Alphabet.Z: return [dash, dash, dot, dot];
+            case MorseAlphabet.A: return [dot, dash];
+            case MorseAlphabet.B: return [dash, dot, dot, dot];
+            case MorseAlphabet.C: return [dash, dot, dash, dot];
+            case MorseAlphabet.D: return [dash, dot, dot];
+            case MorseAlphabet.E: return [dot];
+            case MorseAlphabet.F: return [dot, dot, dash, dot];
+            case MorseAlphabet.G: return [dash, dash, dot];
+            case MorseAlphabet.H: return [dot, dot, dot, dot];
+            case MorseAlphabet.I: return [dot, dot];
+            case MorseAlphabet.J: return [dot, dash, dash, dash];
+            case MorseAlphabet.K: return [dash, dot, dash];
+            case MorseAlphabet.L: return [dot, dash, dot, dot];
+            case MorseAlphabet.M: return [dash, dash];
+            case MorseAlphabet.N: return [dash, dot];
+            case MorseAlphabet.O: return [dash, dash, dash];
+            case MorseAlphabet.P: return [dot, dash, dash, dot];
+            case MorseAlphabet.Q: return [dash, dash, dot, dash];
+            case MorseAlphabet.R: return [dot, dash, dot];
+            case MorseAlphabet.S: return [dot, dot, dot];
+            case MorseAlphabet.T: return [dash];
+            case MorseAlphabet.U: return [dot, dot, dash];
+            case MorseAlphabet.V: return [dot, dot, dot, dash];
+            case MorseAlphabet.W: return [dot, dash, dash];
+            case MorseAlphabet.X: return [dash, dot, dot, dash];
+            case MorseAlphabet.Y: return [dash, dot, dash, dash];
+            case MorseAlphabet.Z: return [dash, dash, dot, dot];
             default: return []
         }
     }
@@ -195,7 +197,7 @@ namespace encryption {
         let wordInterval = 6*speed;
         for (let letter of text){
             letter = letter.toLowerCase()
-            let alphabetValue = letterToAlphabet(letter)
+            let alphabetValue = letterToMorseAlphabet(letter)
             let images = morseCodeAlphabetImage(alphabetValue)
             for (let i of images){
                 let interval = i === dot ? dotInterval : dashInterval
@@ -374,40 +376,131 @@ namespace pairings {
     }
 }
 
-enum Alphabet {A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z}
 
-function letterToAlphabet(x: string): Alphabet{
+
+enum ShiftAlphabet {A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z};
+
+enum MorseAlphabet {A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z};
+
+enum PigpenAlphabet {
+    //% jres=customIcons.pigpenA
+    A,
+    //% jres=customIcons.pigpenB
+    B,
+    //% jres=customIcons.pigpenC
+    C,
+    //% jres=customIcons.pigpenD
+    D,
+    //% jres=customIcons.pigpenE
+    E,
+    //% jres=customIcons.pigpenF
+    F,
+    //% jres=customIcons.pigpenG
+    G,
+    //% jres=customIcons.pigpenH
+    H,
+    //% jres=customIcons.pigpenI
+    I,
+    //% jres=customIcons.pigpenJ
+    J,
+    //% jres=customIcons.pigpenK
+    K,
+    //% jres=customIcons.pigpenL
+    L,
+    //% jres=customIcons.pigpenM
+    M,
+    //% jres=customIcons.pigpenN
+    N,
+    //% jres=customIcons.pigpenO
+    O,
+    //% jres=customIcons.pigpenP
+    P,
+    //% jres=customIcons.pigpenQ
+    Q,
+    //% jres=customIcons.pigpenR
+    R,
+    //% jres=customIcons.pigpenS
+    S,
+    //% jres=customIcons.pigpenT
+    T,
+    //% jres=customIcons.pigpenU
+    U,
+    //% jres=customIcons.pigpenV
+    V,
+    //% jres=customIcons.pigpenW
+    W,
+    //% jres=customIcons.pigpenX
+    X,
+    //% jres=customIcons.pigpenY
+    Y,
+    //% jres=customIcons.pigpenZ
+    Z 
+}
+
+function letterToPigpenAlphabet(x: string): PigpenAlphabet{
     switch (x) {
-        case 'a': return Alphabet.A
-        case 'b': return Alphabet.B
-        case 'c': return Alphabet.C
-        case 'd': return Alphabet.D
-        case 'e': return Alphabet.E
-        case 'f': return Alphabet.F
-        case 'g': return Alphabet.G
-        case 'h': return Alphabet.H
-        case 'i': return Alphabet.I
-        case 'j': return Alphabet.J
-        case 'k': return Alphabet.K
-        case 'l': return Alphabet.L
-        case 'm': return Alphabet.M
-        case 'n': return Alphabet.N
-        case 'o': return Alphabet.O
-        case 'p': return Alphabet.P
-        case 'q': return Alphabet.Q
-        case 'r': return Alphabet.R
-        case 's': return Alphabet.S
-        case 't': return Alphabet.T
-        case 'u': return Alphabet.U
-        case 'v': return Alphabet.V
-        case 'w': return Alphabet.W
-        case 'x': return Alphabet.X
-        case 'y': return Alphabet.Y
-        case 'z': return Alphabet.Z
+        case 'a': return PigpenAlphabet.A
+        case 'b': return PigpenAlphabet.B
+        case 'c': return PigpenAlphabet.C
+        case 'd': return PigpenAlphabet.D
+        case 'e': return PigpenAlphabet.E
+        case 'f': return PigpenAlphabet.F
+        case 'g': return PigpenAlphabet.G
+        case 'h': return PigpenAlphabet.H
+        case 'i': return PigpenAlphabet.I
+        case 'j': return PigpenAlphabet.J
+        case 'k': return PigpenAlphabet.K
+        case 'l': return PigpenAlphabet.L
+        case 'm': return PigpenAlphabet.M
+        case 'n': return PigpenAlphabet.N
+        case 'o': return PigpenAlphabet.O
+        case 'p': return PigpenAlphabet.P
+        case 'q': return PigpenAlphabet.Q
+        case 'r': return PigpenAlphabet.R
+        case 's': return PigpenAlphabet.S
+        case 't': return PigpenAlphabet.T
+        case 'u': return PigpenAlphabet.U
+        case 'v': return PigpenAlphabet.V
+        case 'w': return PigpenAlphabet.W
+        case 'x': return PigpenAlphabet.X
+        case 'y': return PigpenAlphabet.Y
+        case 'z': return PigpenAlphabet.Z
         default: return null
     }
 }
 
+
+function letterToMorseAlphabet(x: string): MorseAlphabet{
+    switch (x) {
+        case 'a': return MorseAlphabet.A
+        case 'b': return MorseAlphabet.B
+        case 'c': return MorseAlphabet.C
+        case 'd': return MorseAlphabet.D
+        case 'e': return MorseAlphabet.E
+        case 'f': return MorseAlphabet.F
+        case 'g': return MorseAlphabet.G
+        case 'h': return MorseAlphabet.H
+        case 'i': return MorseAlphabet.I
+        case 'j': return MorseAlphabet.J
+        case 'k': return MorseAlphabet.K
+        case 'l': return MorseAlphabet.L
+        case 'm': return MorseAlphabet.M
+        case 'n': return MorseAlphabet.N
+        case 'o': return MorseAlphabet.O
+        case 'p': return MorseAlphabet.P
+        case 'q': return MorseAlphabet.Q
+        case 'r': return MorseAlphabet.R
+        case 's': return MorseAlphabet.S
+        case 't': return MorseAlphabet.T
+        case 'u': return MorseAlphabet.U
+        case 'v': return MorseAlphabet.V
+        case 'w': return MorseAlphabet.W
+        case 'x': return MorseAlphabet.X
+        case 'y': return MorseAlphabet.Y
+        case 'z': return MorseAlphabet.Z
+        default: return null
+    }
+}
 
 
 
