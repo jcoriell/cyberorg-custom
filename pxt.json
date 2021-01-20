@@ -11,7 +11,10 @@
         "main.ts",
         "README.md",
         "custom.ts",
-        "customIcons.jres"
+        "customIcons.jres",
+        "encryption.ts",
+        "pairing.ts",
+        "enigma.ts"
     ],
     "testFiles": [
         "test.ts"
