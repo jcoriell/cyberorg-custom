@@ -7,7 +7,7 @@ namespace encryption {
         consoleIsOn = x
     }
 
-    //% block="message %message || initial %initial rotor%rotor position%position reflector%reflector"
+    //% block="message %message initial %initial rotor %rotor position %position reflector %reflector"
     //% useEnumVal=1
     //% initial.fieldEditor="gridpicker"
     //% initial.fieldOptions.columns="13"
@@ -18,6 +18,7 @@ namespace encryption {
     //% reflector.fieldEditor="gridpicker"
     //% rPosition.fieldOptions.columns="13"
     //% rPosition.fieldOptions.maxRows=3  
+    //% expandableArgumentMode="toggle"
     //% group="Enigma"
     //% advanced=false
     export function oneRotorEnigma(s: string, initial: EnigmaAlphabet, rotor: Rotor, position: EnigmaAlphabet, rPosition: EnigmaAlphabet): string {
