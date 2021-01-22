@@ -76,7 +76,7 @@ namespace encryption {
                     consoleStr += `Value after reflector.  ${value.toString()}\n`
 
                     //reverse
-                    for (let j=2; j >= 0; j--){
+                    for (let j=this.rotors.length-1; j >= 0; j--){
                         let location = Math.mod(value + this.rotors[j].position + Math.mod(Math.floor(count/Math.pow(alphabetLength, this.rotors.length-j-1)), alphabetLength), alphabetLength)
                         value = Math.mod(value + reverseWiring[this.rotors[j].wiring][location], alphabetLength)
                         consoleStr += `Value after  Rotor ${j+1}; Forward pass.  ${value.toString()}\n`
