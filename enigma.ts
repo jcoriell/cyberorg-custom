@@ -7,7 +7,7 @@ namespace encryption {
         consoleIsOn = x
     }
 
-    //% block="message %message initial %initial rotor %rotor position %position reflector %reflector"
+    //% block="message %message initial %initial || rotor %rotor position %position \n reflector %reflector"
     //% useEnumVal=1
     //% initial.fieldEditor="gridpicker"
     //% initial.fieldOptions.columns="13"
@@ -18,10 +18,9 @@ namespace encryption {
     //% reflector.fieldEditor="gridpicker"
     //% rPosition.fieldOptions.columns="13"
     //% rPosition.fieldOptions.maxRows=3  
-    //% expandableArgumentMode="toggle"
     //% group="Enigma"
     //% advanced=false
-    export function oneRotorEnigma(s: string, initial: EnigmaAlphabet, rotor: Rotor, position: EnigmaAlphabet, rPosition: EnigmaAlphabet): string {
+    export function oneRotorEnigma(s: string, initial: EnigmaAlphabet, rotor: RotorType, position: EnigmaAlphabet, rPosition: EnigmaAlphabet): string {
         let count = 0
         let result = ''
         let consoleStr = ''
@@ -66,16 +65,80 @@ namespace encryption {
     }
 
 
-    //% block
+
+    
+    let _machines: Machine[];
+
+    //% block="create machine | initial $initial | rotors $rotors | reflector $reflector"
     //% group="Enigma"
-    export function twoRotorEnigma(s: string): string {
-        return s
+    //% rotors.shadow="lists_create_with"
+    //% rotors.defl="rotorBlock"
+    export function createMachine(initial: EnigmaAlphabet, rotors: Rotor[], reflector: EnigmaAlphabet): Machine {
+        machineinit();
+        let machine = new Machine(rotors);
+        return machine;
     }
-    //% block
+    
+    
+    export class Machine {
+        public initial: EnigmaAlphabet;
+        public rotors: Rotor[];
+        public reflector: EnigmaAlphabet;
+
+        constructor(rotors: Rotor[]){
+            machineinit();
+            this.initial = EnigmaAlphabet.A;
+            this.rotors = rotors
+            this.reflector = EnigmaAlphabet.A;
+            _machines.push(this);
+        }
+
+
+        //% block="use %machine on %message"
+        //% group="Enigma"
+        public useMachine(message: string): void {
+            serial.writeLine(`Machine used on ${message}`)
+        }
+
+
+
+    }
+
+    function machineinit(): void {
+        _machines = (<Machine[]>[]);
+    }
+
+
+    //% block="$c1 position $p1"
+    //% blockId=rotorBlock
+    //% inlineInputMode=inline
     //% group="Enigma"
-    export function threeRotorEnigma(s: string): string {
-        return s
+    export function rotor(c1: RotorType, p1: EnigmaAlphabet): Rotor {
+        rotorinit();
+        let newRotor = new Rotor(c1, p1);
+        return newRotor
     }
+
+    let _rotors: Rotor[];
+
+    class Rotor {
+        public c1: RotorType;
+        public p1: EnigmaAlphabet;
+ 
+        constructor(c:RotorType, p: EnigmaAlphabet){
+            rotorinit()
+            this.c1 = c;
+            this.p1 = p;
+            _rotors.push(this)
+        }
+    }  
+
+    function rotorinit(): void {
+        _rotors = (<Rotor[]>[]);
+    } 
+
+
+
 }
 
 
@@ -93,6 +156,10 @@ const reflector = [4, 2, 5, -2, -4, 3, 5, -5, -3, 3, 4, -5, -3, 5, -4, 2, 4, -2,
 
 
 enum EnigmaAlphabet {A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z};
-enum Rotor{One,Two,Three}
+enum RotorType{One,Two,Three}
+
+
+
+
 
 
