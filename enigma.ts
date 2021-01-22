@@ -12,17 +12,17 @@ namespace encryption {
     
     let _machines: Machine[];
 
-    //% block="create machine | initial $initial | rotors $rotors | reflector $reflector"
+    //% block="Enigma Machine || Entry $initial | Reflector $reflector"
     //% group="Enigma"
     //% rotors.shadow="lists_create_with"
     //% rotors.defl="rotorBlock"
-    export function createMachine(initial: EnigmaAlphabet, reflector: EnigmaAlphabet): Machine {
+    //% blockSetVariable=machine
+    export function createMachine(initial = EnigmaAlphabet.A, reflector = EnigmaAlphabet.A): Machine {
         machineinit();
-        let machine = new Machine();
-        return machine;
+        return new Machine();
     }
     
-    
+    //% autoCreate=encryption.createMachine
     export class Machine {
         public initial: EnigmaAlphabet;
         public rotors: Rotor[];
@@ -37,7 +37,7 @@ namespace encryption {
         }
 
 
-        //% block="%machine add rotor | cipher %cipher | position %position"
+        //% block="%machine add | rotor %cipher | position %position"
         //% group="Enigma"
         public addRotor(cipher: RotorType, position: EnigmaAlphabet): void {
             let newRotor = new Rotor(cipher, position)
@@ -113,11 +113,8 @@ namespace encryption {
     }
 
 
-    //% block="$c1 position $p1"
-    //% blockId=rotorBlock
-    //% inlineInputMode=inline
-    //% group="Enigma"
-    export function rotor(c1: RotorType, p1: EnigmaAlphabet): Rotor {
+
+     function rotor(c1: RotorType, p1: EnigmaAlphabet): Rotor {
         rotorinit();
         let newRotor = new Rotor(c1, p1);
         return newRotor
@@ -160,7 +157,7 @@ const reflectorWiring = [4, 2, 5, -2, -4, 3, 5, -5, -3, 3, 4, -5, -3, 5, -4, 2, 
 
 
 enum EnigmaAlphabet {A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z};
-enum RotorType{One,Two,Three}
+enum RotorType{I,II,III}
 
 
 
