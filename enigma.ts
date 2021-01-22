@@ -7,63 +7,6 @@ namespace encryption {
         consoleIsOn = x
     }
 
-    //% block="message %message initial %initial || rotor %rotor position %position \n reflector %reflector"
-    //% useEnumVal=1
-    //% initial.fieldEditor="gridpicker"
-    //% initial.fieldOptions.columns="13"
-    //% initial.fieldOptions.maxRows=3
-    //% position.fieldEditor="gridpicker"
-    //% position.fieldOptions.columns="13"
-    //% position.fieldOptions.maxRows=3  
-    //% reflector.fieldEditor="gridpicker"
-    //% rPosition.fieldOptions.columns="13"
-    //% rPosition.fieldOptions.maxRows=3  
-    //% group="Enigma"
-    //% advanced=false
-    export function oneRotorEnigma(s: string, initial: EnigmaAlphabet, rotor: RotorType, position: EnigmaAlphabet, rPosition: EnigmaAlphabet): string {
-        let count = 0
-        let result = ''
-        let consoleStr = ''
-        for (let i = 0; i <s.length; i++){
-            let character = s.charAt(i).toLowerCase()
-            consoleStr += `Current Character is '${character}'\n`
-            count = Math.mod(count,26)
-            if (shiftCipherAlphabet.includes(character)){
-
-                let index = shiftCipherAlphabet.indexOf(character)
-                consoleStr += `Value of Current Character is ${index.toString()}\n`
-
-                let value = Math.mod(index - initial, 26) //can the other 26 be a descriptive variable instead? Is it just the length of our alphabet?
-                consoleStr += `Value after initial ring ${value.toString()}\n`
-                
-                value = Math.mod(value + forward[rotor][Math.mod(value + position + count,26)], 26) //can the other 26 be a descriptive variable instead?
-                consoleStr += `Value after first rotor; Forward pass.  ${value.toString()}\n`
-
-                value = Math.mod(value + reflector[Math.mod(value + rPosition, 26)],26) // can the other 26 be a descriptive variable instead?
-                consoleStr += `Value after reflector.  ${value.toString()}\n`
-
-                value = Math.mod(value + reverse[rotor][Math.mod(value + position + count,26)], 26) //can the other 26 be a descriptive variable instead?
-                consoleStr += `Value after first rotor; Returning pass.  ${value.toString()}\n`
-
-                value = Math.mod(value + initial, 26) // can the other 26 be a descriptive variable instead?
-                consoleStr += `Final Value at initial ring.  ${value.toString()}\n`
-
-                result = result + shiftCipherAlphabet.charAt(value)
-                consoleStr += `Character returned from final value.  ${shiftCipherAlphabet.charAt(value)}\n-\n`
-
-                count = count + 1
-            }
-            else{
-                consoleStr += 'Character not in alphabet. Character skipped. \n-\n'
-                result = result + character                              
-            }
-        }
-
-        consoleIsOn && serial.writeLine(consoleStr)
-
-        return result;
-    }
-
 
 
     
@@ -73,9 +16,9 @@ namespace encryption {
     //% group="Enigma"
     //% rotors.shadow="lists_create_with"
     //% rotors.defl="rotorBlock"
-    export function createMachine(initial: EnigmaAlphabet, rotors: Rotor[], reflector: EnigmaAlphabet): Machine {
+    export function createMachine(initial: EnigmaAlphabet, reflector: EnigmaAlphabet): Machine {
         machineinit();
-        let machine = new Machine(rotors);
+        let machine = new Machine();
         return machine;
     }
     
@@ -85,19 +28,80 @@ namespace encryption {
         public rotors: Rotor[];
         public reflector: EnigmaAlphabet;
 
-        constructor(rotors: Rotor[]){
+        constructor(){
             machineinit();
             this.initial = EnigmaAlphabet.A;
-            this.rotors = rotors
+            this.rotors = []
             this.reflector = EnigmaAlphabet.A;
             _machines.push(this);
         }
 
 
+        //% block="%machine add rotor | cipher %cipher | position %position"
+        //% group="Enigma"
+        public addRotor(cipher: RotorType, position: EnigmaAlphabet): void {
+            let newRotor = new Rotor(cipher, position)
+            this.rotors.push(newRotor)
+        }
+
         //% block="use %machine on %message"
         //% group="Enigma"
-        public useMachine(message: string): void {
-            serial.writeLine(`Machine used on ${message}`)
+        public useMachine(message: string): string {
+            let count = 0
+            let result = ''
+            let consoleStr = ''
+            let alphabetLength = shiftCipherAlphabet.length
+            for (let i = 0; i < message.length; i++){
+                let character = message.charAt(i).toLowerCase()
+                consoleStr += `Current Character is '${character}'\n`
+                if (shiftCipherAlphabet.includes(character)){
+
+                    // to numbers
+                    let index = shiftCipherAlphabet.indexOf(character)
+                    consoleStr += `Value of Current Character is ${index.toString()}\n`
+
+                    let value = Math.mod(index - this.initial, alphabetLength)
+                    consoleStr += `Value after initial ring ${value.toString()}\n`
+                    
+                    //forward
+                    for (let j=0; j < this.rotors.length; j++){
+                        let location = Math.mod(value + this.rotors[j].position + Math.mod(Math.floor(count/Math.pow(alphabetLength, this.rotors.length-j-1)), alphabetLength), alphabetLength)
+                        value = Math.mod(value + forwardWiring[this.rotors[j].wiring][location], alphabetLength)
+                        consoleStr += `Value after  Rotor ${j+1}; Forward pass.  ${value.toString()}\n`
+                    }
+
+
+                    //reflect
+                    value = Math.mod(value + reflectorWiring[Math.mod(value + this.reflector, 26)],26)
+                    consoleStr += `Value after reflector.  ${value.toString()}\n`
+
+                    //reverse
+                    for (let j=2; j >= 0; j--){
+                        let location = Math.mod(value + this.rotors[j].position + Math.mod(Math.floor(count/Math.pow(alphabetLength, this.rotors.length-j-1)), alphabetLength), alphabetLength)
+                        value = Math.mod(value + reverseWiring[this.rotors[j].wiring][location], alphabetLength)
+                        consoleStr += `Value after  Rotor ${j+1}; Forward pass.  ${value.toString()}\n`
+                    }
+
+
+                    //back to letters
+                    value = Math.mod(value + this.initial, alphabetLength)
+                    consoleStr += `Final Value at initial ring.  ${value.toString()}\n`
+
+                    result = result + shiftCipherAlphabet.charAt(value)
+                    consoleStr += `Character returned from final value.  ${shiftCipherAlphabet.charAt(value)}\n-\n`
+
+                    count = count + 1
+                }
+                else{
+                    consoleStr += 'Character not in alphabet. Character skipped. \n-\n'
+                    result = result + character                              
+                }
+            }
+            consoleStr += `Final message.\n ${result}`
+            consoleIsOn && serial.writeLine(consoleStr)
+
+            return result;
+    
         }
 
 
@@ -122,13 +126,13 @@ namespace encryption {
     let _rotors: Rotor[];
 
     class Rotor {
-        public c1: RotorType;
-        public p1: EnigmaAlphabet;
+        public wiring: RotorType;
+        public position: EnigmaAlphabet;
  
         constructor(c:RotorType, p: EnigmaAlphabet){
             rotorinit()
-            this.c1 = c;
-            this.p1 = p;
+            this.wiring = c;
+            this.position = p;
             _rotors.push(this)
         }
     }  
@@ -142,17 +146,17 @@ namespace encryption {
 }
 
 
-const forward = [
+const forwardWiring = [
         [2,  2,  2, -3, -3,  1,  2, -2, -1,  2, -1,  1,  2, -3,  3, -2, 3,  3, -3, -3,  2, -3, -1,  2, -1, -1],
         [1, -1,  1,  1,  1, -3,  2, -1, -1,  2,  2, -2, -2,  1, -1,  1, 1, -2,  2, -1, -1,  3,  3, -2, -2, -2],
         [3, -1, -1,  3,  3, -3, -2, -2,  1, -1,  1, -1,  3, -1, -1, -1, 2,  2, -2, -2,  3,  3,  3, -3, -3, -3]
     ];
-const reverse = [
+const reverseWiring = [
         [3,  3, -2, -2, -2,  2, -1,  1, -2,  1,  3, -2, -1, 2, -2,  3,  3, -3,  3, -3, -3,  1, -2,  1,  1, -2],
         [1, -1,  3, -1, -1, -1,  1,  1, -2,  2,  2, -2, -2, 1, -1,  2, -1, -1,  1,  1, -2,  2,  2,  2, -3, -3],
         [1,  1,  3, -3,  2,  2, -3, -3,  1, -1,  1, -1,  1, 1,  1, -3,  2,  2, -2, -2,  3,  3,  3, -3, -3, -3]
     ];
-const reflector = [4, 2, 5, -2, -4, 3, 5, -5, -3, 3, 4, -5, -3, 5, -4, 2, 4, -2, -5, 3, -4, 3, -3, 2, -3, -2];
+const reflectorWiring = [4, 2, 5, -2, -4, 3, 5, -5, -3, 3, 4, -5, -3, 5, -4, 2, 4, -2, -5, 3, -4, 3, -3, 2, -3, -2];
 
 
 enum EnigmaAlphabet {A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z};
