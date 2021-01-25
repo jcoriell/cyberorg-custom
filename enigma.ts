@@ -1,13 +1,7 @@
     
 namespace encryption {
-    let consoleIsOn = false
 
-    //% block
-    export function consoleOn(x: boolean):void{
-        consoleIsOn = x
-    }
-
-
+    export const enigmaCipherAlphabet = "abcdefghijklmnopqrstuvwxyz"
 
     
     let _machines: Machine[];
@@ -38,6 +32,7 @@ namespace encryption {
 
 
         //% block="%machine add | rotor %cipher | position %position"
+        //% position.fieldEditor="gridpicker"
         //% group="Enigma"
         public addRotor(cipher: RotorType, position: EnigmaAlphabet): void {
             let newRotor = new Rotor(cipher, position)
@@ -50,14 +45,14 @@ namespace encryption {
             let count = 0
             let result = ''
             let consoleStr = ''
-            let alphabetLength = shiftCipherAlphabet.length
+            let alphabetLength = enigmaCipherAlphabet.length
             for (let i = 0; i < message.length; i++){
                 let character = message.charAt(i).toLowerCase()
                 consoleStr += `Current Character is '${character}'\n`
-                if (shiftCipherAlphabet.includes(character)){
+                if (enigmaCipherAlphabet.includes(character)){
 
                     // to numbers
-                    let index = shiftCipherAlphabet.indexOf(character)
+                    let index = enigmaCipherAlphabet.indexOf(character)
                     consoleStr += `Value of Current Character is ${index.toString()}\n`
 
                     let value = Math.mod(index - this.initial, alphabetLength)
@@ -87,8 +82,8 @@ namespace encryption {
                     value = Math.mod(value + this.initial, alphabetLength)
                     consoleStr += `Final Value at initial ring.  ${value.toString()}\n`
 
-                    result = result + shiftCipherAlphabet.charAt(value)
-                    consoleStr += `Character returned from final value.  ${shiftCipherAlphabet.charAt(value)}\n-\n`
+                    result = result + enigmaCipherAlphabet.charAt(value)
+                    consoleStr += `Character returned from final value.  ${enigmaCipherAlphabet.charAt(value)}\n-\n`
 
                     count = count + 1
                 }
