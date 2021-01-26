@@ -2,13 +2,119 @@
 namespace encryption {
 
     export const enigmaCipherAlphabet = "abcdefghijklmnopqrstuvwxyz"
+    
 
+    /**
+     * Encrypt a message using a zero rotor enigma machine.
+     * @param message a message to encrypt, eg: "hi"
+     * @param entry the position of the entry ring, eg: EnigmaAlphabet.A
+     * @param reflector the position of the reflector, eg: EnigmaAlphabet.A
+     */
+    //% block="use zero rotor enigma on %message || Entry %entry Reflector %reflector"
+    //% group="Enigma"
+    //% expandableArgumentMode="toggle"
+    //% inlineInputMode=inline
+    export function zeroRotorMachine(message: string, entry=EnigmaAlphabet.A, reflector=EnigmaAlphabet.A):string{
+        let machine = new EnigmaMachine()
+        machine.setEntry(entry)
+        machine.setReflector(reflector)
+        return machine.useMachine(message)
+    }
+
+
+    /**
+     * Encrypt a message using a one rotor enigma machine.
+     * @param message a message to encrypt, eg: "hi"
+     * @param entry the position of the entry ring, eg: EnigmaAlphabet.A
+     * @param rotor1 the wiring of the first rotor, eg: RotorWiring.I
+     * @param position1 the position of the first rotor, eg: EnigmaAlphabet.A
+     * @param reflector the position of the reflector, eg: EnigmaAlphabet.A
+     */
+    //% block="use one rotor enigma on %message || Key %entry - %rotor1%position1 - %reflector"
+    //% group="Enigma"
+    //% expandableArgumentMode="toggle"
+    //% inlineInputMode=inline
+    export function oneRotorMachine(
+                              message: string, 
+                              entry=EnigmaAlphabet.A, 
+                              rotor1=RotorWiring.I, position1=EnigmaAlphabet.A,
+                              reflector=EnigmaAlphabet.A
+                              ):string {
+        let machine = new EnigmaMachine()
+        machine.setEntry(entry)
+        machine.addRotor(rotor1, position1)
+        machine.setReflector(reflector)
+        return machine.useMachine(message)
+    }
+
+    /**
+     * Encrypt a message using a two rotor enigma machine.
+     * @param message a message to encrypt, eg: "hi"
+     * @param entry the position of the entry ring, eg: EnigmaAlphabet.A
+     * @param rotor1 the wiring of the first rotor, eg: RotorWiring.I
+     * @param position1 the position of the first rotor, eg: EnigmaAlphabet.A
+     * @param rotor2 the wiring of the second rotor, eg: RotorWiring.II
+     * @param position2 the position of the second rotor, eg: EnigmaAlphabet.A
+     * @param reflector the position of the reflector, eg: EnigmaAlphabet.A
+     */
+    //% block="use two rotor enigma on %message || Key %entry - %rotor1%position1 - %rotor2%position2 - %reflector"
+    //% group="Enigma"
+    //% expandableArgumentMode="toggle"
+    //% inlineInputMode=inline
+    export function twoRotorMachine(
+                              message: string, 
+                              entry=EnigmaAlphabet.A, 
+                              rotor1=RotorWiring.I, position1=EnigmaAlphabet.A,
+                              rotor2=RotorWiring.II, position2=EnigmaAlphabet.A,
+                              reflector=EnigmaAlphabet.A
+                              ):string {
+        let machine = new EnigmaMachine()
+        machine.setEntry(entry)
+        machine.addRotor(rotor1, position1)
+        machine.addRotor(rotor2, position2)
+        machine.setReflector(reflector)
+        return machine.useMachine(message)
+    }
+
+    /**
+     * Encrypt a message using a three rotor enigma machine.
+     * @param message a message to encrypt, eg: "hi"
+     * @param entry the position of the entry ring, eg: EnigmaAlphabet.A
+     * @param rotor1 the wiring of the first rotor, eg: RotorWiring.I
+     * @param position1 the position of the first rotor, eg: EnigmaAlphabet.A
+     * @param rotor2 the wiring of the second rotor, eg: RotorWiring.II
+     * @param position2 the position of the second rotor, eg: EnigmaAlphabet.A
+     * @param rotor3 the wiring of the third rotor, eg: RotorWiring.III
+     * @param position3 the position of the third rotor, eg: EnigmaAlphabet.A
+     * @param reflector the position of the reflector, eg: EnigmaAlphabet.A
+     */
+    //% block="use three rotor enigma on %message || Key %entry - %rotor1%position1 - %rotor2%position2 - %rotor3%position3 - %reflector"
+    //% group="Enigma"
+    //% expandableArgumentMode="toggle"
+    //% inlineInputMode=inline
+    export function threeRotorMachine(
+                              message: string, 
+                              entry=EnigmaAlphabet.A, 
+                              rotor1=RotorWiring.I, position1=EnigmaAlphabet.A,
+                              rotor2=RotorWiring.II, position2=EnigmaAlphabet.A,
+                              rotor3=RotorWiring.III, position3=EnigmaAlphabet.A,
+                              reflector=EnigmaAlphabet.A
+                              ):string {
+        let machine = new EnigmaMachine()
+        machine.setEntry(entry)
+        machine.addRotor(rotor1, position1)
+        machine.addRotor(rotor2, position2)
+        machine.addRotor(rotor3, position3)
+        machine.setReflector(reflector)
+        return machine.useMachine(message)
+    }
     
     let _machines: EnigmaMachine[];
 
     //% block="new EnigmaMachine"
     //% group="Enigma"
-    //% blockSetVariable=enigmaMachine
+    //% blockSetVariable=enigma
+    //% advanced=true
     export function createMachine(): EnigmaMachine {
         machineinit();
         return new EnigmaMachine();
@@ -31,6 +137,7 @@ namespace encryption {
         //% block="%enigmaMachine set entry %entry"
         //% position.fieldEditor="gridpicker"
         //% group="Enigma"
+        //% advanced=true
         public setEntry(entry: EnigmaAlphabet): void {
             this.entry = entry;
         }
@@ -38,6 +145,7 @@ namespace encryption {
         //% block="%enigmaMachine set reflector %entry"
         //% position.fieldEditor="gridpicker"
         //% group="Enigma"
+        //% advanced=true
         public setReflector(reflector: EnigmaAlphabet): void {
             this.reflector = reflector;
         }
@@ -46,13 +154,15 @@ namespace encryption {
         //% block="%enigmaMachine add | rotor %cipher | position %position"
         //% position.fieldEditor="gridpicker"
         //% group="Enigma"
-        public addRotor(cipher: RotorType, position: EnigmaAlphabet): void {
+        //% advanced=true
+        public addRotor(cipher: RotorWiring, position: EnigmaAlphabet): void {
             let newRotor = new Rotor(cipher, position)
             this.rotors.push(newRotor)
         }
 
         //% block="use %enigmaMachine on %message"
         //% group="Enigma"
+        //% advanced=true
         public useMachine(message: string): string {
             let count = 0
             let result = ''
@@ -121,7 +231,7 @@ namespace encryption {
 
 
 
-     function rotor(c1: RotorType, p1: EnigmaAlphabet): Rotor {
+     function rotor(c1: RotorWiring, p1: EnigmaAlphabet): Rotor {
         rotorinit();
         let newRotor = new Rotor(c1, p1);
         return newRotor
@@ -130,10 +240,10 @@ namespace encryption {
     let _rotors: Rotor[];
 
     class Rotor {
-        public wiring: RotorType;
+        public wiring: RotorWiring;
         public position: EnigmaAlphabet;
  
-        constructor(c:RotorType, p: EnigmaAlphabet){
+        constructor(c:RotorWiring, p: EnigmaAlphabet){
             rotorinit()
             this.wiring = c;
             this.position = p;
@@ -164,7 +274,7 @@ const reflectorWiring = [4, 2, 5, -2, -4, 3, 5, -5, -3, 3, 4, -5, -3, 5, -4, 2, 
 
 
 enum EnigmaAlphabet {A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z};
-enum RotorType{I,II,III}
+enum RotorWiring{I,II,III}
 
 
 
