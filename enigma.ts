@@ -4,34 +4,46 @@ namespace encryption {
     export const enigmaCipherAlphabet = "abcdefghijklmnopqrstuvwxyz"
 
     
-    let _machines: Machine[];
+    let _machines: EnigmaMachine[];
 
-    //% block="Enigma Machine || Entry $initial | Reflector $reflector"
+    //% block="new EnigmaMachine"
     //% group="Enigma"
-    //% rotors.shadow="lists_create_with"
-    //% rotors.defl="rotorBlock"
-    //% blockSetVariable=machine
-    export function createMachine(initial = EnigmaAlphabet.A, reflector = EnigmaAlphabet.A): Machine {
+    //% blockSetVariable=enigmaMachine
+    export function createMachine(): EnigmaMachine {
         machineinit();
-        return new Machine();
+        return new EnigmaMachine();
     }
     
     //% autoCreate=encryption.createMachine
-    export class Machine {
-        public initial: EnigmaAlphabet;
+    export class EnigmaMachine {
+        public entry: EnigmaAlphabet;
         public rotors: Rotor[];
         public reflector: EnigmaAlphabet;
 
         constructor(){
             machineinit();
-            this.initial = EnigmaAlphabet.A;
+            this.entry = EnigmaAlphabet.A;
             this.rotors = []
             this.reflector = EnigmaAlphabet.A;
             _machines.push(this);
         }
 
+        //% block="%enigmaMachine set entry %entry"
+        //% position.fieldEditor="gridpicker"
+        //% group="Enigma"
+        public setEntry(entry: EnigmaAlphabet): void {
+            this.entry = entry;
+        }
 
-        //% block="%machine add | rotor %cipher | position %position"
+        //% block="%enigmaMachine set reflector %entry"
+        //% position.fieldEditor="gridpicker"
+        //% group="Enigma"
+        public setReflector(reflector: EnigmaAlphabet): void {
+            this.reflector = reflector;
+        }
+
+
+        //% block="%enigmaMachine add | rotor %cipher | position %position"
         //% position.fieldEditor="gridpicker"
         //% group="Enigma"
         public addRotor(cipher: RotorType, position: EnigmaAlphabet): void {
@@ -39,7 +51,7 @@ namespace encryption {
             this.rotors.push(newRotor)
         }
 
-        //% block="use %machine on %message"
+        //% block="use %enigmaMachine on %message"
         //% group="Enigma"
         public useMachine(message: string): string {
             let count = 0
@@ -55,8 +67,8 @@ namespace encryption {
                     let index = enigmaCipherAlphabet.indexOf(character)
                     consoleStr += `Value of Current Character is ${index.toString()}\n`
 
-                    let value = Math.mod(index - this.initial, alphabetLength)
-                    consoleStr += `Value after initial ring ${value.toString()}\n`
+                    let value = Math.mod(index - this.entry, alphabetLength)
+                    consoleStr += `Value after entry ring ${value.toString()}\n`
                     
                     //forward
                     for (let j=0; j < this.rotors.length; j++){
@@ -79,8 +91,8 @@ namespace encryption {
 
 
                     //back to letters
-                    value = Math.mod(value + this.initial, alphabetLength)
-                    consoleStr += `Final Value at initial ring.  ${value.toString()}\n`
+                    value = Math.mod(value + this.entry, alphabetLength)
+                    consoleStr += `Final Value at entry ring.  ${value.toString()}\n`
 
                     result = result + enigmaCipherAlphabet.charAt(value)
                     consoleStr += `Character returned from final value.  ${enigmaCipherAlphabet.charAt(value)}\n-\n`
@@ -104,7 +116,7 @@ namespace encryption {
     }
 
     function machineinit(): void {
-        _machines = (<Machine[]>[]);
+        _machines = (<EnigmaMachine[]>[]);
     }
 
 
