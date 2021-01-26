@@ -1,17 +1,18 @@
-//% color=#3CDBC0 weight=101 icon="☰"
+//% color=#0D9DDB weight=99 icon="\uf00b"
 namespace pairings { 
     
-    let _pairings: Pairing[];
+    let _pairings: Pairings[];
 
-    //% block = "new mapping"
-    export function createPairing(): Pairing {
+    //% block = "new Pairings"
+    //% blockSetVariable=pairings
+    export function createPairings(): Pairings {
         init();
-        let newMapping = new Pairing();
+        let newMapping = new Pairings();
         return newMapping;
     }
     
-    //% autoCreate=pairings.createPairing
-    export class Pairing {
+    //% autoCreate=pairings.createPairings
+    export class Pairings {
         public keys: string[];
         public values: string[];
 
@@ -22,7 +23,7 @@ namespace pairings {
             _pairings.push(this);
         }
 
-        //% block="set | %pairing | %key | : | %value"
+        //% block="set | %pairings | %key | : | %value"
         public setPair(key: string, value: string): void{
             let index = this.keys.indexOf(key)
             if (index > -1) {
@@ -35,7 +36,7 @@ namespace pairings {
             
         }
 
-        //% block="%pairing | get value at key | %key"
+        //% block="%pairings | get value at key | %key"
         public getValue(key: string): string {
             let index = this.keys.indexOf(key)
             if (index > -1){
@@ -44,7 +45,7 @@ namespace pairings {
             return 'key not found'
         }
 
-        //% block="%pairing | delete pair at key | %key"
+        //% block="%pairings | delete pair at key | %key"
         public delPair(key: string): void {
             let index = this.keys.indexOf(key)
             if (index > -1){
@@ -55,6 +56,6 @@ namespace pairings {
     }
 
     function init(): void {
-        _pairings = (<Pairing[]>[]);
+        _pairings = (<Pairings[]>[]);
     }
 }

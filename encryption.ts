@@ -1,20 +1,13 @@
 
-//% weight=100 color=#00C1D4 icon="☰"
-//% groups='["Shift Ciphers", "Vigenere Ciphers", "Pigpen", "Morse Code"]'
+//% weight=100 color=#00C1D4 icon="\uf023"
+//% groups='["Pigpen", "Shift Ciphers", "Vigenere", "Morse Code", "Enigma", "Other"]'
 namespace encryption {
-
-    export let consoleIsOn = false
-
-    //% block
-    //% advanced=true
-    export function consoleOn(x: boolean):void{
-        consoleIsOn = x
-    }
 
     let shiftCipherAlphabet = "abcdefghijklmnopqrstuvwxyz"
 
     //% block="set shift/vigenere alphabet to $alphabet"
     //% advanced=true
+    //% group="Other"
     export function setAlphabet(alphabet: string): void {
         shiftCipherAlphabet = alphabet
     }

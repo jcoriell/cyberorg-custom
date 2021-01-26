@@ -14,6 +14,7 @@ namespace encryption {
     //% group="Enigma"
     //% expandableArgumentMode="toggle"
     //% inlineInputMode=inline
+    //% weight=100
     export function zeroRotorMachine(message: string, entry=EnigmaAlphabet.A, reflector=EnigmaAlphabet.A):string{
         let machine = new EnigmaMachine()
         machine.setEntry(entry)
@@ -34,6 +35,7 @@ namespace encryption {
     //% group="Enigma"
     //% expandableArgumentMode="toggle"
     //% inlineInputMode=inline
+    //% weight=90
     export function oneRotorMachine(
                               message: string, 
                               entry=EnigmaAlphabet.A, 
@@ -61,6 +63,7 @@ namespace encryption {
     //% group="Enigma"
     //% expandableArgumentMode="toggle"
     //% inlineInputMode=inline
+    //% weight=80
     export function twoRotorMachine(
                               message: string, 
                               entry=EnigmaAlphabet.A, 
@@ -92,6 +95,7 @@ namespace encryption {
     //% group="Enigma"
     //% expandableArgumentMode="toggle"
     //% inlineInputMode=inline
+    //% weight=70
     export function threeRotorMachine(
                               message: string, 
                               entry=EnigmaAlphabet.A, 
@@ -115,6 +119,7 @@ namespace encryption {
     //% group="Enigma"
     //% blockSetVariable=enigma
     //% advanced=true
+    //% weight=100
     export function createMachine(): EnigmaMachine {
         machineinit();
         return new EnigmaMachine();
@@ -134,35 +139,39 @@ namespace encryption {
             _machines.push(this);
         }
 
-        //% block="%enigmaMachine set entry %entry"
+        //% block="%enigma set entry %entry"
         //% position.fieldEditor="gridpicker"
         //% group="Enigma"
         //% advanced=true
+        //% weight=90
         public setEntry(entry: EnigmaAlphabet): void {
             this.entry = entry;
         }
 
-        //% block="%enigmaMachine set reflector %entry"
+
+        //% block="%enigma add | rotor %cipher | position %position"
         //% position.fieldEditor="gridpicker"
         //% group="Enigma"
         //% advanced=true
-        public setReflector(reflector: EnigmaAlphabet): void {
-            this.reflector = reflector;
-        }
-
-
-        //% block="%enigmaMachine add | rotor %cipher | position %position"
-        //% position.fieldEditor="gridpicker"
-        //% group="Enigma"
-        //% advanced=true
+        //% weight=80
         public addRotor(cipher: RotorWiring, position: EnigmaAlphabet): void {
             let newRotor = new Rotor(cipher, position)
             this.rotors.push(newRotor)
         }
 
-        //% block="use %enigmaMachine on %message"
+        //% block="%enigma set reflector %entry"
+        //% position.fieldEditor="gridpicker"
         //% group="Enigma"
         //% advanced=true
+        //% weight=70
+        public setReflector(reflector: EnigmaAlphabet): void {
+            this.reflector = reflector;
+        }
+
+        //% block="use %enigma on %message"
+        //% group="Enigma"
+        //% advanced=true
+        //% weight=60
         public useMachine(message: string): string {
             let count = 0
             let result = ''
@@ -215,7 +224,7 @@ namespace encryption {
                 }
             }
             consoleStr += `Final message.\n ${result}`
-            consoleIsOn && serial.writeLine(consoleStr)
+            cyberOrg.consoleIsOn && serial.writeLine(consoleStr)
 
             return result;
     
