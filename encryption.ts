@@ -85,6 +85,7 @@ namespace encryption {
         let n2 = shiftCipherAlphabet.indexOf(k2)
         return shiftNumeric(s, n2 - n1)
     }
+    
 
     /**
      * TODO: describe your function here
@@ -109,6 +110,8 @@ namespace encryption {
     export function letterValue(name: ShiftAlphabet): number {
         return name;
     }
+
+
 
     //% block="%i"
     //% i.fieldEditor="gridpicker"
@@ -384,3 +387,6 @@ function letterToMorseAlphabet(x: string): MorseAlphabet{
         default: return null
     }
 }
+
+
+
