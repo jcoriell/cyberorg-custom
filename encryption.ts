@@ -151,7 +151,7 @@ namespace encryption {
 
 
 
-    //% block
+    //% block="encrypt %text using pigpen"
     //% group="Pigpen"
     export function pigpen(text: string): void{
         let space = images.createImage(`. .\n. .\n. .\n. .\n. .`)
