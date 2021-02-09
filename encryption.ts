@@ -111,42 +111,101 @@ namespace encryption {
         return name;
     }
 
+    let _pigpenImages: PigPenImage[];
 
+    class PigPenImage{
+        public image: Image;
+        public character: string;
+
+        constructor(c: string | PigpenAlphabet){
+            pigpeninit();
+            if (typeof c === "string"){
+                this.image = this.setImage(this.letterToPigpenAlphabet(c));
+                this.character = c
+            } 
+            else {
+                this.image = this.setImage(c)
+            }
+            _pigpenImages.push(this);
+        }
+
+
+        private setImage(i: PigpenAlphabet): Image {
+            switch (i) {
+                case PigpenAlphabet.A: return images.createImage(`. . . . #\n. . . . #\n. . . . #\n. . . . #\n# # # # #`);
+                case PigpenAlphabet.B: return images.createImage(`. . . . #\n. . . . #\n. . # . #\n. . . . #\n# # # # #`);
+                case PigpenAlphabet.C: return images.createImage(`# . . . #\n# . . . #\n# . . . #\n# . . . #\n# # # # #`);
+                case PigpenAlphabet.D: return images.createImage(`# . . . #\n# . . . #\n# . # . #\n# . . . #\n# # # # #`);
+                case PigpenAlphabet.E: return images.createImage(`# . . . .\n# . . . .\n# . . . .\n# . . . .\n# # # # #`);
+                case PigpenAlphabet.F: return images.createImage(`# . . . .\n# . . . .\n# . # . .\n# . . . .\n# # # # #`);
+                case PigpenAlphabet.G: return images.createImage(`# # # # #\n. . . . #\n. . . . #\n. . . . #\n# # # # #`);
+                case PigpenAlphabet.H: return images.createImage(`# # # # #\n. . . . #\n. . # . #\n. . . . #\n# # # # #`);
+                case PigpenAlphabet.I: return images.createImage(`# # # # #\n# . . . #\n# . . . #\n# . . . #\n# # # # #`);
+                case PigpenAlphabet.J: return images.createImage(`# # # # #\n# . . . #\n# . # . #\n# . . . #\n# # # # #`);
+                case PigpenAlphabet.K: return images.createImage(`# # # # #\n# . . . .\n# . . . .\n# . . . .\n# # # # #`);
+                case PigpenAlphabet.L: return images.createImage(`# # # # #\n# . . . .\n# . # . .\n# . . . .\n# # # # #`);
+                case PigpenAlphabet.M: return images.createImage(`# # # # #\n. . . . #\n. . . . #\n. . . . #\n. . . . #`);
+                case PigpenAlphabet.N: return images.createImage(`# # # # #\n. . . . #\n. . # . #\n. . . . #\n. . . . #`);
+                case PigpenAlphabet.O: return images.createImage(`# # # # #\n# . . . #\n# . . . #\n# . . . #\n# . . . #`);
+                case PigpenAlphabet.P: return images.createImage(`# # # # #\n# . . . #\n# . # . #\n# . . . #\n# . . . #`);
+                case PigpenAlphabet.Q: return images.createImage(`# # # # #\n# . . . .\n# . . . .\n# . . . .\n# . . . .`);
+                case PigpenAlphabet.R: return images.createImage(`# # # # #\n# . . . .\n# . # . .\n# . . . .\n# . . . .`);
+                case PigpenAlphabet.S: return images.createImage(`. . . . .\n. . . . .\n# . . . #\n. # . # .\n. . # . .`);
+                case PigpenAlphabet.T: return images.createImage(`. . . . .\n. . # . .\n# . . . #\n. # . # .\n. . # . .`);
+                case PigpenAlphabet.U: return images.createImage(`. . # . .\n. . . # .\n. . . . #\n. . . # .\n. . # . .`);
+                case PigpenAlphabet.V: return images.createImage(`. . # . .\n. . . # .\n. # . . #\n. . . # .\n. . # . .`);
+                case PigpenAlphabet.W: return images.createImage(`. . # . .\n. # . # .\n# . . . #\n. . . . .\n. . . . .`);
+                case PigpenAlphabet.X: return images.createImage(`. . # . .\n. # . # .\n# . . . #\n. . # . .\n. . . . .`);
+                case PigpenAlphabet.Y: return images.createImage(`. . # . .\n. # . . .\n# . . . .\n. # . . .\n. . # . .`);
+                case PigpenAlphabet.Z: return images.createImage(`. . # . .\n. # . . .\n# . . # .\n. # . . .\n. . # . .`);
+                default: return images.createImage(`. .\n. .\n. .\n. .\n. .`);
+            }
+        }
+
+        private letterToPigpenAlphabet(x: string): PigpenAlphabet{
+            switch (x) {
+                case 'a': return PigpenAlphabet.A
+                case 'b': return PigpenAlphabet.B
+                case 'c': return PigpenAlphabet.C
+                case 'd': return PigpenAlphabet.D
+                case 'e': return PigpenAlphabet.E
+                case 'f': return PigpenAlphabet.F
+                case 'g': return PigpenAlphabet.G
+                case 'h': return PigpenAlphabet.H
+                case 'i': return PigpenAlphabet.I
+                case 'j': return PigpenAlphabet.J
+                case 'k': return PigpenAlphabet.K
+                case 'l': return PigpenAlphabet.L
+                case 'm': return PigpenAlphabet.M
+                case 'n': return PigpenAlphabet.N
+                case 'o': return PigpenAlphabet.O
+                case 'p': return PigpenAlphabet.P
+                case 'q': return PigpenAlphabet.Q
+                case 'r': return PigpenAlphabet.R
+                case 's': return PigpenAlphabet.S
+                case 't': return PigpenAlphabet.T
+                case 'u': return PigpenAlphabet.U
+                case 'v': return PigpenAlphabet.V
+                case 'w': return PigpenAlphabet.W
+                case 'x': return PigpenAlphabet.X
+                case 'y': return PigpenAlphabet.Y
+                case 'z': return PigpenAlphabet.Z
+                default: return null
+            }
+        }
+    }
+
+    function pigpeninit(): void {
+        _pigpenImages = (<PigPenImage[]>[]);
+    }
 
     //% block="%i"
     //% i.fieldEditor="gridpicker"
     //% i.fieldOptions.columns="6"
     //% group="Pigpen"
     export function pigpenAlphabetImage(i: PigpenAlphabet): Image {
-        switch (i) {
-            case PigpenAlphabet.A: return images.createImage(`. . . . #\n. . . . #\n. . . . #\n. . . . #\n# # # # #`);
-            case PigpenAlphabet.B: return images.createImage(`. . . . #\n. . . . #\n. . # . #\n. . . . #\n# # # # #`);
-            case PigpenAlphabet.C: return images.createImage(`# . . . #\n# . . . #\n# . . . #\n# . . . #\n# # # # #`);
-            case PigpenAlphabet.D: return images.createImage(`# . . . #\n# . . . #\n# . # . #\n# . . . #\n# # # # #`);
-            case PigpenAlphabet.E: return images.createImage(`# . . . .\n# . . . .\n# . . . .\n# . . . .\n# # # # #`);
-            case PigpenAlphabet.F: return images.createImage(`# . . . .\n# . . . .\n# . # . .\n# . . . .\n# # # # #`);
-            case PigpenAlphabet.G: return images.createImage(`# # # # #\n. . . . #\n. . . . #\n. . . . #\n# # # # #`);
-            case PigpenAlphabet.H: return images.createImage(`# # # # #\n. . . . #\n. . # . #\n. . . . #\n# # # # #`);
-            case PigpenAlphabet.I: return images.createImage(`# # # # #\n# . . . #\n# . . . #\n# . . . #\n# # # # #`);
-            case PigpenAlphabet.J: return images.createImage(`# # # # #\n# . . . #\n# . # . #\n# . . . #\n# # # # #`);
-            case PigpenAlphabet.K: return images.createImage(`# # # # #\n# . . . .\n# . . . .\n# . . . .\n# # # # #`);
-            case PigpenAlphabet.L: return images.createImage(`# # # # #\n# . . . .\n# . # . .\n# . . . .\n# # # # #`);
-            case PigpenAlphabet.M: return images.createImage(`# # # # #\n. . . . #\n. . . . #\n. . . . #\n. . . . #`);
-            case PigpenAlphabet.N: return images.createImage(`# # # # #\n. . . . #\n. . # . #\n. . . . #\n. . . . #`);
-            case PigpenAlphabet.O: return images.createImage(`# # # # #\n# . . . #\n# . . . #\n# . . . #\n# . . . #`);
-            case PigpenAlphabet.P: return images.createImage(`# # # # #\n# . . . #\n# . # . #\n# . . . #\n# . . . #`);
-            case PigpenAlphabet.Q: return images.createImage(`# # # # #\n# . . . .\n# . . . .\n# . . . .\n# . . . .`);
-            case PigpenAlphabet.R: return images.createImage(`# # # # #\n# . . . .\n# . # . .\n# . . . .\n# . . . .`);
-            case PigpenAlphabet.S: return images.createImage(`. . . . .\n. . . . .\n# . . . #\n. # . # .\n. . # . .`);
-            case PigpenAlphabet.T: return images.createImage(`. . . . .\n. . # . .\n# . . . #\n. # . # .\n. . # . .`);
-            case PigpenAlphabet.U: return images.createImage(`. . # . .\n. . . # .\n. . . . #\n. . . # .\n. . # . .`);
-            case PigpenAlphabet.V: return images.createImage(`. . # . .\n. . . # .\n. # . . #\n. . . # .\n. . # . .`);
-            case PigpenAlphabet.W: return images.createImage(`. . # . .\n. # . # .\n# . . . #\n. . . . .\n. . . . .`);
-            case PigpenAlphabet.X: return images.createImage(`. . # . .\n. # . # .\n# . . . #\n. . # . .\n. . . . .`);
-            case PigpenAlphabet.Y: return images.createImage(`. . # . .\n. # . . .\n# . . . .\n. # . . .\n. . # . .`);
-            case PigpenAlphabet.Z: return images.createImage(`. . # . .\n. # . . .\n# . . # .\n. # . . .\n. . # . .`);
-            default: return images.createImage(`. .\n. .\n. .\n. .\n. .`);
-        }
+        let temp = new PigPenImage(i);
+        return temp.image;
     }
 
 
@@ -158,7 +217,8 @@ namespace encryption {
         let ending = images.createImage(`. . .\n. . .\n. . .\n. . .\n. . .`)
         for (let value of text) {
             value = value.toLowerCase()
-            pigpenAlphabetImage(letterToPigpenAlphabet(value)).scrollImage(0, 250)
+            let i = new PigPenImage(value)
+            i.image.scrollImage(0, 250)
             space.scrollImage(0, 250)
         }
         ending.scrollImage(0, 250)
@@ -323,37 +383,6 @@ enum PigpenAlphabet {
     Z 
 }
 
-function letterToPigpenAlphabet(x: string): PigpenAlphabet{
-    switch (x) {
-        case 'a': return PigpenAlphabet.A
-        case 'b': return PigpenAlphabet.B
-        case 'c': return PigpenAlphabet.C
-        case 'd': return PigpenAlphabet.D
-        case 'e': return PigpenAlphabet.E
-        case 'f': return PigpenAlphabet.F
-        case 'g': return PigpenAlphabet.G
-        case 'h': return PigpenAlphabet.H
-        case 'i': return PigpenAlphabet.I
-        case 'j': return PigpenAlphabet.J
-        case 'k': return PigpenAlphabet.K
-        case 'l': return PigpenAlphabet.L
-        case 'm': return PigpenAlphabet.M
-        case 'n': return PigpenAlphabet.N
-        case 'o': return PigpenAlphabet.O
-        case 'p': return PigpenAlphabet.P
-        case 'q': return PigpenAlphabet.Q
-        case 'r': return PigpenAlphabet.R
-        case 's': return PigpenAlphabet.S
-        case 't': return PigpenAlphabet.T
-        case 'u': return PigpenAlphabet.U
-        case 'v': return PigpenAlphabet.V
-        case 'w': return PigpenAlphabet.W
-        case 'x': return PigpenAlphabet.X
-        case 'y': return PigpenAlphabet.Y
-        case 'z': return PigpenAlphabet.Z
-        default: return null
-    }
-}
 
 
 function letterToMorseAlphabet(x: string): MorseAlphabet{
