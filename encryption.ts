@@ -5,10 +5,7 @@ namespace encryption {
 
     let shiftCipherAlphabet = "abcdefghijklmnopqrstuvwxyz"
 
-    //% block="set shift/vigenere alphabet to $alphabet"
-    //% advanced=true
-    //% group="Other"
-    export function setAlphabet(alphabet: string): void {
+    function setAlphabet(alphabet: string): void {
         shiftCipherAlphabet = alphabet
     }
     

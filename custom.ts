@@ -7,4 +7,7 @@ namespace cyberOrg {
     export function consoleOn(x: boolean):void{
         consoleIsOn = x
     }
+
+ 
 }
+
