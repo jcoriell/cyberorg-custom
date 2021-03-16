@@ -1,6 +1,6 @@
 // Todo
 // - add console for all encryption methods
-// - 
+// - reconsider words on encryption blocks
 
 //% color=#3CDBC0 weight=101 icon="\uf0c9"
 //% block="CYBER.ORG"
