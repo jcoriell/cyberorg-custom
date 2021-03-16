@@ -196,13 +196,13 @@ namespace encryption {
         _pigpenImages = (<PigPenImage[]>[]);
     }
 
-    //% block="%i"
+    //% block="show %i"
     //% i.fieldEditor="gridpicker"
     //% i.fieldOptions.columns="6"
     //% group="Pigpen"
-    export function pigpenAlphabetImage(i: PigpenAlphabet): Image {
-        let temp = new PigPenImage(i);
-        return temp.image;
+    export function pigpenAlphabetImage(i: PigpenAlphabet): void {
+        let img = new PigPenImage(i);
+        img.image.showImage(0);
     }
 
 
