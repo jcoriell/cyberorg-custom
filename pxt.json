@@ -14,7 +14,8 @@
         "customIcons.jres",
         "encryption.ts",
         "pairing.ts",
-        "enigma.ts"
+        "enigma.ts",
+        "main.py"
     ],
     "testFiles": [
         "test.ts"

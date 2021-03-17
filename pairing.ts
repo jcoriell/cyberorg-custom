@@ -59,3 +59,27 @@ namespace pairings {
         _pairings = (<Pairings[]>[]);
     }
 }
+
+//% color=#0D9DDB weight=99 icon="\uf00b"
+namespace objects { 
+    
+    //% block = "new JS Object"
+    //% blockSetVariable=pairings
+    export function createObject(): {} {
+        let newObject:any = {};
+        return newObject;
+    }
+
+    //% block
+    export function setItem(obj: any,  str: string, val: any ): void{
+        obj[str] = val;
+    }
+
+    //% block
+    export function getItem(obj: any,  str: string ): any{
+        return obj[str];
+    }
+
+}
+
+
