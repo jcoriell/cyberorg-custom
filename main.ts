@@ -1,4 +1,4 @@
-let myObj = objects.createObject()
-objects.setItem(myObj, "hi", "6")
-objects.setItem(myObj, "hiya", 10)
-basic.showString("" + (objects.getItem(myObj, "hiya")))
+let myDictionary = dictionaries.createDictionary()
+dictionaries.setKeyValue(myDictionary, "key1", 5146)
+dictionaries.setKeyValue(myDictionary, "hello", "g")
+basic.showString("" + (dictionaries.getValue(myDictionary, "hello")))
