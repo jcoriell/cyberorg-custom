@@ -1,3 +1,4 @@
-let myDictionary = dictionaries.createDictionary()
-myDictionary.setKeyValueNumber("key1", 0)
-myDictionary.setKeyValueString("key1", "hello")
+let myDictionary = dictionaries.createDictionaryFromString("{\"hi\": 6, \"name\":\"j\"}")
+myDictionary.setKeyValueNumber("key1", 10)
+myDictionary.setKeyValueString("key2", "hello")
+console.log(myDictionary)

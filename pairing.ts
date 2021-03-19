@@ -2,13 +2,24 @@
 //% color=#0D9DDB weight=99 icon="\uf02d"
 namespace dictionaries { 
  
+
     /**
      * Creates a new dictionary-like object.
     */
     //% block = "new Dictionary"
     //% blockSetVariable=myDictionary
     export function createDictionary(): Dictionary {
-        let newDictionary = new Dictionary;
+        let newDictionary = new Dictionary("");
+        return newDictionary;
+    }
+
+    /**
+     * Creates a new dictionary-like object from a JSON formatted string.
+    */
+    //% block = "new Dictionary"
+    //% blockSetVariable=myDictionary
+    export function createDictionaryFromString(s: string): Dictionary {
+        let newDictionary = new Dictionary(s);
         return newDictionary;
     }
 
@@ -16,19 +27,23 @@ namespace dictionaries {
     let _dictionaries: Dictionary[];
 
     export class Dictionary {
-
+        
         public structure: { [key: string]: any } = {};
 
-        constructor(){
+
+        constructor(s:string){
             init()
+            if (s.length > 0){
+                this.structure = JSON.parse(s);
+            }
             _dictionaries.push(this)
         }
 
+
         /**
-         * Set a key value pair for a dictionary
-         * @param dictionary is a dictionary
+         * Set a key value pair with a string value.
          * @param key is a string, eg: "key1"
-         * @param value is the value at the key, eg: "hello"
+         * @param val is the value at the key, eg: "hello"
          */
         //% block="in %myDictionary set key-value pair %key : %value"
         setKeyValueString(key: string, val: string ): void{
@@ -36,10 +51,9 @@ namespace dictionaries {
         }
 
         /**
-         * Set a key value pair for a dictionary
-         * @param dictionary is a dictionary
+         * Set a key value pair with a number value.
          * @param key is a string, eg: "key1"
-         * @param value is the value at the key, eg: 6
+         * @param val is the value at the key, eg: 6
          */
         //% block="in %myDictionary set key-value pair %key : %value"
         setKeyValueNumber(key: string, val: number ): void{
@@ -47,9 +61,19 @@ namespace dictionaries {
         }
 
         //% block="from %myDictionary get value at key %key"
-        getValue(key: string ): any{
-            return this.structure[key];
+        getValue(key: string): any{
+            return this.structure[key]
         }
+
+
+        // only support strings and numbers for now.
+        // maybe support arrays of string and arrays of numbers
+
+        toString(): string{
+            return JSON.stringify(this.structure)
+        }
+
+        
     
     }  
 
