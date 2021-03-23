@@ -13,9 +13,11 @@
         "custom.ts",
         "customIcons.jres",
         "encryption.ts",
-        "pairing.ts",
+        "dictionaries.ts",
         "enigma.ts",
-        "main.py"
+        "main.py",
+        "morse.ts",
+        "cyberorg.ts"
     ],
     "testFiles": [
         "test.ts"
