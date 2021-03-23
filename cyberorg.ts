@@ -1,14 +1,13 @@
 
 //% color=#3CDBC0 weight=101 icon="\uf0c9"
 //% block="CYBER.ORG"
+//% groups='["Activities", "Settings", "Other"]'
 namespace cyberOrg {
-
-    export let mbpass = ""
-    let useMbPass = false
     
     export let consoleIsOn = false
 
     //% block
+    //% group="Settings"
     export function consoleOn(x: boolean):void{
         consoleIsOn = x
     }
@@ -20,6 +19,7 @@ namespace cyberOrg {
     //% block="generate password with %length characters"
     //% length.min=1
     //% length.max=99
+    //% group="Other"
     export function generatePassword(length: number): string{
         let password = ""
         for (let i=0; i < length; i++){
@@ -48,6 +48,7 @@ namespace cyberOrg {
     }
 
     //% block
+    //% group="Other"
     export function generateMicrobitPassword(length: number):string{
         let choices = "AB"
         let password = ""
@@ -55,12 +56,12 @@ namespace cyberOrg {
             let index = randint(0,1)
             password += choices[index]
         }
-        mbpass = password
         return password
     }
 
-    //% block
-    export function passwordGuesser(length: number){
+    //% block="guess password of length %length"
+    //% group="Activites"
+    export function guessPassword(length: number){
         let y_loc = 0
         let x_loc = 0
         let i = 0
@@ -112,11 +113,12 @@ namespace cyberOrg {
      * @param nums, eg: [1,0,1,0,1]
      */
     //% block
+    //% group="Other"
     export function displayBinaryPixels(nums: number[]):void{
         let row = 2;
         let brightness: number;
         for (let i=0; i < 5; i++){
-            nums[i] === 1 ? brightness = 255 : brightness = 127;
+            nums[i] === 1 ? brightness = 255 : brightness = 10;
             led.plotBrightness(i, row, brightness);
         }
     }
@@ -128,6 +130,7 @@ namespace cyberOrg {
     //% block
     //% value.min = 0
     //% value.max = 31
+    //% group="Other"
     export function createBinaryArray(value: number): number[]{
         let binaryArray = [0,0,0,0,0]
         if (value/16 >= 1) {
@@ -152,7 +155,12 @@ namespace cyberOrg {
         return binaryArray
     }
 
+    /**
+     * This block turns the microbit into a binary counter. 
+     * Hold B for more than 5 seconds to quit.
+     */
     //% block 
+    //% group="Activities"
     export function binaryCounter(){
         let counter = 0
         while (true){
@@ -161,13 +169,18 @@ namespace cyberOrg {
                 counter -= 1
             }
             else if (input.buttonIsPressed(Button.B)){
+                let startCancel = control.millis()
                 control.waitForEvent(Button.B, TouchButtonEvent.Released)
+                if (control.millis() - startCancel > 5000){
+                    basic.clearScreen()
+                    break
+                }
                 counter += 1
             }
-            else if (counter > 31){
+            if (counter > 31){
                 counter = 0
             }
-            else if (counter < 0){
+            if (counter < 0){
                 counter = 31
             }
             displayBinaryPixels(createBinaryArray(counter));
