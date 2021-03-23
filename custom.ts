@@ -67,6 +67,121 @@ namespace cyberOrg {
         return password
     }
 
+    //% block
+    export function passwordGuesser(length: number){
+        let y_loc = 0
+        let x_loc = 0
+        let i = 0
+        let password = generateMicrobitPassword(length)
+        while (i < password.length) {
+            x_loc = i % 5
+            y_loc = Math.floor(i / 5)
+            if (input.buttonIsPressed(Button.A)) {
+                control.waitForEvent(Button.A, TouchButtonEvent.Released)
+                if (password.charAt(i) == "A") {
+                    led.plotBrightness(x_loc, y_loc, 150)
+                    i += 1
+                } 
+                
+                else {
+                    i = 0
+                    basic.clearScreen()
+                    //pause(250)
+                    basic.showIcon(IconNames.No)
+                    pause(250)
+                    basic.clearScreen()
+                }
+                
+            } 
+            else if (input.buttonIsPressed(Button.B)) {
+                if (password.charAt(i) == "B") {
+                    control.waitForEvent(Button.B, TouchButtonEvent.Released)
+                    led.plotBrightness(x_loc, y_loc, 255)
+                    i += 1
+                } 
+                
+                else {
+                    i = 0
+                    basic.clearScreen()
+                    //pause(250)
+                    basic.showIcon(IconNames.No)
+                    pause(250)
+                    basic.clearScreen()
+                }
+                
+            }
+        }
+        pause(500)
+        basic.showIcon(IconNames.Happy)
+    }
+
+    /**
+     * Displays a 5 bit binary array as pixels
+     * @param nums, eg: [1,0,1,0,1]
+     */
+    //% block
+    export function displayBinaryPixels(nums: number[]):void{
+        let row = 2;
+        let brightness: number;
+        for (let i=0; i < 5; i++){
+            nums[i] === 1 ? brightness = 255 : brightness = 127;
+            led.plotBrightness(i, row, brightness);
+        }
+    }
+
+    /**
+     * Takes a number and converts it to a 5 bit binary array
+     * @param value, eg: 2
+     */
+    //% block
+    //% value.min = 0
+    //% value.max = 31
+    export function createBinaryArray(value: number): number[]{
+        let binaryArray = [0,0,0,0,0]
+        if (value/16 >= 1) {
+            binaryArray[0] = 1
+            value -= 16
+        }
+        if (value/8 >= 1) {
+            binaryArray[1] = 1
+            value -= 8
+        }
+        if (value/4 >= 1) {
+            binaryArray[2] = 1
+            value -= 4
+        }
+        if (value/2 >= 1) {
+            binaryArray[3] = 1
+            value -= 2
+        }
+        if (value >= 1) {
+            binaryArray[4] = 1
+        }
+        return binaryArray
+    }
+
+    //% block 
+    export function binaryCounter(){
+        let counter = 0
+        while (true){
+            if (input.buttonIsPressed(Button.A)){
+                control.waitForEvent(Button.A, TouchButtonEvent.Released)
+                counter -= 1
+            }
+            else if (input.buttonIsPressed(Button.B)){
+                control.waitForEvent(Button.B, TouchButtonEvent.Released)
+                counter += 1
+            }
+            else if (counter > 31){
+                counter = 0
+            }
+            else if (counter < 0){
+                counter = 31
+            }
+            displayBinaryPixels(createBinaryArray(counter));
+        }
+    }
+
 
  
 }

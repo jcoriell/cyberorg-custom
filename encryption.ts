@@ -279,7 +279,7 @@ namespace encryption {
     //% block="show | %text | as Morse code at speed | %speed"
     //% speed.min=1 speed.max=10
     //% group="Morse Code"
-    export function morseTwo(text: string, speed: number): void{
+    export function showMorseCode(text: string, speed: number): void{
         speed = 100*(11 - speed);
         let dotInterval = speed;
         let dashInterval = 3*speed;
@@ -293,6 +293,7 @@ namespace encryption {
                 let interval = i === dot ? dotInterval : dashInterval
                 i.showImage(0, interval)
                 basic.clearScreen()
+                
                 basic.pause(speed)
             }
             letter === ' ' ? basic.pause(wordInterval) : basic.pause(letterInterval)
