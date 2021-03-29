@@ -60,7 +60,7 @@ namespace cyberOrg {
     }
 
     //% block="guess password of length %length"
-    //% group="Activites"
+    //% group="Activities"
     export function guessPassword(length: number){
         let y_loc = 0
         let x_loc = 0
