@@ -56,6 +56,17 @@ namespace encryption {
             case MorseAlphabet.Eight: return [dash, dash, dash, dot, dot];
             case MorseAlphabet.Nine: return [dash, dash, dash, dash, dot];
             case MorseAlphabet.Zero: return [dash, dash, dash, dash, dash];
+            case MorseAlphabet.Period : return [];
+            case MorseAlphabet.Comma: return [];
+            case MorseAlphabet.QuestionMark: return [];
+            case MorseAlphabet.Apostrophe: return [];
+            case MorseAlphabet.ExclamationPoint: return [];
+            case MorseAlphabet.Slash: return [];
+            case MorseAlphabet.OpenParenthesis: return [];
+            case MorseAlphabet.CloseParenthesis: return [];
+            case MorseAlphabet.Ampersand: return [];
+            case MorseAlphabet.Colon: return [];
+            case MorseAlphabet.Semicolon: return [];
             default: return []
         }
     }
@@ -95,34 +106,52 @@ namespace encryption {
         }
     }
 
+
+
+    function singleWordToMorse(word: string): string {
+        let wordAsMorse = ''
+        for (let letter of word) {
+            letter = letter.toLowerCase()
+            let alphabetValue = letterToMorseAlphabet(letter)
+            if (alphabetValue !== null){
+                let dotAndDashImages = morseCodeAlphabetImage(alphabetValue)
+                wordAsMorse += dotAndDashImages.map(blip => blip === dot ? '.' : '-').join('')
+            }
+            else{ 
+                cyberOrg.error(`${letter} is not a supported character.`) 
+            }       
+            wordAsMorse += ' '
+        }
+        return wordAsMorse;
+    }
+
+
     //% block
     export function morseCode(text: string):string{
-        let result = ''
-        for (let letter of text) {
-            letter = letter.toLowerCase()
-            if (letter === ' '){
-                result += ' / ' 
-                continue
-            }
-            let alphabetValue = letterToMorseAlphabet(letter)
-            let blips = morseCodeAlphabetImage(alphabetValue)
-            for (let i=0; i < blips.length; i++){
-                if (blips[i] === dot){
-                    result += '.'
-                }
-                else if (blips[i] === dash){
-                    result += '-'
-                }
-            }
-            result += ' '
-        }
-        result = result.slice(0,-1)
+        let words = text.split(" ")
+        let result = words.map(word => singleWordToMorse(word))
+                          .filter(word => word !== " " && word !== "")
+                          .join(' / ')
         console.log(result)
-        return result
+        return result 
     }
 }
 
-enum MorseAlphabet {A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,One,Two,Three,Four,Five,Six,Seven,Eight,Nine,Zero};
+enum MorseAlphabet {
+    A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,
+    One,Two,Three,Four,Five,Six,Seven,Eight,Nine,Zero,
+    Period,
+    Comma,
+    QuestionMark,
+    Apostrophe,
+    ExclamationPoint,
+    Slash,
+    OpenParenthesis,
+    CloseParenthesis,
+    Ampersand,
+    Colon,
+    Semicolon
+};
 
 
 function letterToMorseAlphabet(x: string): MorseAlphabet{
@@ -163,6 +192,17 @@ function letterToMorseAlphabet(x: string): MorseAlphabet{
         case '8': return MorseAlphabet.Eight
         case '9': return MorseAlphabet.Nine
         case '0': return MorseAlphabet.Zero
+        case '.': return MorseAlphabet.Period
+        case ',': return MorseAlphabet.Comma
+        case '?': return MorseAlphabet.QuestionMark
+        case "'": return MorseAlphabet.Apostrophe
+        case '!': return MorseAlphabet.ExclamationPoint
+        case '/': return MorseAlphabet.Slash
+        case '(': return MorseAlphabet.OpenParenthesis
+        case ')': return MorseAlphabet.CloseParenthesis
+        case '&': return MorseAlphabet.Ampersand
+        case ':': return MorseAlphabet.Colon
+        case ';': return MorseAlphabet.Semicolon
         default: return null
     }
 }

@@ -1,1 +1,1 @@
-basic.showString(encryption.morseCode("hello sos how are you 5&6 me"))
+basic.showString(encryption.morseCode("h%ello so how are you 5&6 me"))

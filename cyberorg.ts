@@ -12,6 +12,20 @@ namespace cyberOrg {
         consoleIsOn = x
     }
 
+    export function error(msg: string){
+        let error = msg;
+        console.log(error)
+        while (true){
+            for (let i=0; i < 2; i++){
+                basic.showIcon(IconNames.Sad)
+                pause(200)
+                basic.clearScreen()
+                pause(200)
+            }
+            basic.showString(error, 100)
+        }
+    }
+
     /**
      * Generate a password with a certain length.
      * @param length
