@@ -1,1 +1,1 @@
-basic.showString(encryption.toAlphabetCharacters(".... .. / .... --- .-- / .- .-. . / -.-- --- ..-"))
+basic.showString("" + (0))

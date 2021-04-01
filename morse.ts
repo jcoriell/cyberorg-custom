@@ -143,10 +143,13 @@ namespace encryption {
         return result 
     }
 
+    /** Turns a morse code message into alphabetical characters.
+     * @param morse is a string of dots and dashes with letters separated by a space and words separated by space slash space, eg: ".... .. / -.-- --- ..-" 
+     */
     //% block
     //% group="Morse Code"
-    export function toAlphabetCharacters(text: string):string{
-        let words = text.split(" / ")
+    export function toAlphabetCharacters(morse: string):string{
+        let words = morse.split(" / ")
         console.log(words)
         let resultingText = ''
         for (let word of words){
