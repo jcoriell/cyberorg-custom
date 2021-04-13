@@ -1,1 +1,1 @@
-basic.showString("" + (0))
+encryption.showMorseCode("hello", 30)

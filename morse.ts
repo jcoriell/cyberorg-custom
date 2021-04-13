@@ -70,14 +70,14 @@ namespace encryption {
     /**
     * Display more code
     * @param text write description here, eg: "hello"
-    * @param speed write description here, eg: 8
-    * @param sound controls if sound is produced
+    * @param speed is in words per minute, eg: 5
+    * @param sound controls if sound is produced, eg: true
     */
-    //% block="show | %text | as Morse code at speed | %speed || sound %sound"
-    //% speed.min=1 speed.max=10
+    //% block="show | %text | as Morse code at %speed wpm || sound %sound"
+    //% speed.min=1 speed.max=30
     //% group="Morse Code"
-    export function showMorseCode(text: string, speed: number, sound?: boolean): void {
-        speed = 100 * (11 - speed);
+    export function showMorseCode(text: string, speed: number, sound = true): void {
+        speed = 1000 * 60/(50*speed)
         let dotInterval = speed;
         let dashInterval = 3 * speed;
         let letterInterval = 2 * speed;
@@ -99,7 +99,7 @@ namespace encryption {
             for (let i of images) {
                 let interval = i === dot ? dotInterval : dashInterval
                 if (sound){
-                    music.ringTone(Note.C)
+                    music.ringTone(550)
                 }
                 i.showImage(0, interval)
                 basic.clearScreen()
@@ -225,9 +225,4 @@ namespace encryption {
     };
 
 }
-
-
-
-
-
 
