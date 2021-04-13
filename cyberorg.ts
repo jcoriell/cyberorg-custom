@@ -6,7 +6,11 @@ namespace cyberOrg {
     
     export let consoleIsOn = false
 
-    //% block
+    /**
+     * Some blocks print to the console when this is set to true.
+     * @param x true for on and false for off.
+     */
+    //% block="console is on:  %x"
     //% group="Settings"
     export function consoleOn(x: boolean):void{
         consoleIsOn = x

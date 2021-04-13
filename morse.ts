@@ -68,7 +68,7 @@ namespace encryption {
 
 
     /**
-    * Display more code
+    * Display Morse code with (or without) sound at a set speed
     * @param text write description here, eg: "hello"
     * @param speed is in words per minute, eg: 5
     * @param sound controls if sound is produced, eg: true
@@ -131,8 +131,11 @@ namespace encryption {
         return wordAsMorse;
     }
 
-
-    //% block
+    /**
+     * Turns a message of allowed alphebtical characters to a string of dots and dashes. The resulting string will separate letters by a space and words by space slash space
+     * @param text is a string of characters, eg: "Hi you"
+     */
+    //% block="convert text %text to string of Morse code"
     //% group="Morse Code"
     export function toMorseCode(text: string):string{
         let words = text.split(" ")
@@ -143,10 +146,11 @@ namespace encryption {
         return result 
     }
 
-    /** Turns a morse code message into alphabetical characters.
+    /** 
+     * Turns a morse code message into alphabetical characters.
      * @param morse is a string of dots and dashes with letters separated by a space and words separated by space slash space, eg: ".... .. / -.-- --- ..-" 
      */
-    //% block
+    //% block="convert string of Morse code %morse to text"
     //% group="Morse Code"
     export function toAlphabetCharacters(morse: string):string{
         let words = morse.split(" / ")

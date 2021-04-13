@@ -5,10 +5,12 @@ namespace encryption {
 
     let shiftCipherAlphabet = "abcdefghijklmnopqrstuvwxyz"
 
-    function setAlphabet(alphabet: string): void {
-        shiftCipherAlphabet = alphabet
-    }
-    
+    /**
+     * Encrypt a message using the Veginere cipher.
+     * @param setting is used to control if you are encrypting or decrypting
+     * @param text is the text you want to encrypt or decrypt, eg: "Jefferson is coming home"
+     * @param key is the passcode that is used to encrypt or decrypt, eg: "artichoke"
+     */
     //% block="Vigenere $setting message $text with key $key"
     //% group="Vigenere"
     export function vigenereEncrypt(setting: EncryptionSetting, text: string, key: string): string {
@@ -104,6 +106,7 @@ namespace encryption {
     //% name.fieldOptions.width="380"
     //% name.fieldOptions.maxRows=3
     //% group="Shift Ciphers"
+    //% blockHidden=true
     export function letterValue(name: ShiftAlphabet): number {
         return name;
     }
