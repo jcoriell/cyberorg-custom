@@ -218,7 +218,7 @@ namespace encryption {
         for (let value of text) {
             value = value.toLowerCase()
             let i = new PigPenImage(value)
-            i.image.scrollImage(0, 250)
+            i.image.scrollImage(1, 250)
             space.scrollImage(0, 250)
         }
         ending.scrollImage(0, 250)

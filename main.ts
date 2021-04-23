@@ -1,1 +1,1 @@
-
+encryption.pigpen("hello")
