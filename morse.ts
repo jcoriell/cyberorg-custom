@@ -1,5 +1,6 @@
-
-namespace encryption {
+//% color=#0D9DDB weight=99 icon="\uf120"
+//% groups='["Morse Code", "Other"]'
+namespace encoding {
 
     export const dot = images.createImage(`
     . . . . .

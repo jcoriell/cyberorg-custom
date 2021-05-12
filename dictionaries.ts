@@ -1,6 +1,6 @@
 
 //% color=#0D9DDB weight=99 icon="\uf02d"
-namespace dictionaries { 
+namespace cyberOrg { 
  
 
     /**
@@ -8,6 +8,7 @@ namespace dictionaries {
     */
     //% block = "new Dictionary"
     //% blockSetVariable=myDictionary
+    //% group="Dictionaries"
     export function createDictionary(): Dictionary {
         let newDictionary = new Dictionary("");
         return newDictionary;
@@ -17,6 +18,7 @@ namespace dictionaries {
      * Creates a new dictionary-like object from a JSON formatted string.
     */
     //% block = "new Dictionary"
+    //% group="Dictionaries"
     //% blockSetVariable=myDictionary
     export function createDictionaryFromString(s: string): Dictionary {
         let newDictionary = new Dictionary(s);
@@ -45,6 +47,7 @@ namespace dictionaries {
          * @param key is a string, eg: "key1"
          * @param val is the value at the key, eg: "hello"
          */
+        //% group="Dictionaries"
         //% block="in %myDictionary set key-value pair %key : %value"
         setKeyValueString(key: string, val: string ): void{
             this.structure[key] = val;
@@ -55,11 +58,13 @@ namespace dictionaries {
          * @param key is a string, eg: "key1"
          * @param val is the value at the key, eg: 6
          */
+        //% group="Dictionaries"
         //% block="in %myDictionary set key-value pair %key : %value"
         setKeyValueNumber(key: string, val: number ): void{
             this.structure[key] = val;
         }
 
+        //%group="Dictionaries"
         //% block="from %myDictionary get value at key %key"
         getValue(key: string): any{
             return this.structure[key]
@@ -82,5 +87,3 @@ namespace dictionaries {
     } 
 
 }
-
-

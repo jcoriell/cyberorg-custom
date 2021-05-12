@@ -1,1 +1,3 @@
-encryption.pigpen("hello")
+basic.forever(function () {
+	
+})

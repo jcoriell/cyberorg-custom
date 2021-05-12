@@ -1,7 +1,7 @@
 
 //% color=#3CDBC0 weight=101 icon="\uf0c9"
 //% block="CYBER.ORG"
-//% groups='["Activities", "Settings", "Other"]'
+//% groups='["Activities", "Settings", "Dictionaries", "Other"]'
 namespace cyberOrg {
     
     export let consoleIsOn = false
