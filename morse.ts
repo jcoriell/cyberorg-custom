@@ -1,4 +1,4 @@
-//% color=#0D9DDB weight=99 icon="\uf120"
+//% color=#0D3D56 weight=99 icon="\uf120"
 //% groups='["Morse Code", "Other"]'
 namespace encoding {
 
